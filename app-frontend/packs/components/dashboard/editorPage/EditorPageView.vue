@@ -1,8 +1,6 @@
 <template>
 
-    <LayoutPage>
-        <EditorPage></EditorPage>
-    </LayoutPage>
+    <EditorPage></EditorPage>
 
 </template>
 

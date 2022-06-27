@@ -1,5 +1,6 @@
 <template>
-    <button class="button" @click="clickUiButton">
+
+    <button class="tt-button" :type="typeButton" @click="clickUiButton">
         <slot></slot>
     </button>
 
@@ -10,8 +11,11 @@ export default {
     name: 'UiButton',
     methods: {
         clickUiButton() {
-            this.$emit('clickUiButton')
+            this.$emit('click');
         }
+    },
+    props: {
+        typeButton:String,
     }
 }
 </script>

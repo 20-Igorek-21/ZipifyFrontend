@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-.app {
+.tt-app {
   height: 100%;
 }
 
@@ -20,19 +20,27 @@ html,body {
   scroll-behavior: smooth;
 }
 
-.link {
+.tt-link {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
 }
 
-.button {
-  font-size: 18px;
+.tt-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
+  font-size: 22px;
   cursor: pointer;
   overflow: hidden;
 }
 
-.link:hover {
+.tt-page__tt-button {
+  height: 50px;
+  border-radius: 4px;
+}
+
+.tt-link:hover {
   opacity: .8;
 }
