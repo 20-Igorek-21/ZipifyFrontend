@@ -1,39 +1,75 @@
 <template>
 
-    <section class="tt-home-page-with-banners">
+    <section
+        class="tt-home-page-with-banners">
 
-        <UiButton class="tt-page__tt-button tt-page__tt-button--first"
-                  :typeButton="'button'"
-                  @click="createNewBanner">Create new banner</UiButton>
+            <HomePageBanner
+                @onDeleteBanner="onDeleteBanner"/>
+
+            <Button
+                class="tt-page__button tt-page__button--first"
+                :type="'button'"
+                @onClick="createBanner">
+                Create new banner
+            </Button>
     </section>
+
+    <HomePagePopup v-if="isShowPopup"
+                   :idBanner="idBanner"
+                   @onClosePopup="isShowPopup = false"/>
 
 </template>
 
 <script>
 
-import UiButton from "../../core/UI/UiButton";
+import Button from "../../baseComponents/Button";
+import HomePageBanner from "./HomePageBanner";
+import HomePagePopup from "./HomePagePopup";
 
 export default {
     name: "HomePageWithBanners",
+
     components: {
-        UiButton
+        HomePagePopup,
+        HomePageBanner,
+        Button
     },
-    methods: {
-        createNewBanner() {
-            this.$emit('clickNewBanner');
-            console.log('2')
+
+    data() {
+        return {
+            isShowPopup: false,
+            idBanner: '',
         }
+    },
+
+    methods: {
+        createBanner() {
+            this.$emit('create');
+        },
+        onDeleteBanner(id) {
+            this.idBanner = id;
+            this.isShowPopup = true;
+        },
     }
 }
 </script>
 
 <style scoped>
 
-.tt-page__tt-button--first {
-    width: 250px;
-    background-color: var(--color-white);
-    color: var(--color-red);
-    border: 2px solid var(--color-red);
-}
+    .tt-page__button--first {
+        width: 200px;
+        position: absolute;
+        bottom: 50px;
+        right: 70px;
+        background-color: var(--color-white);
+        color: var(--color-red);
+        border: 2px solid var(--color-red);
+    }
+
+    .tt-page__button--first:hover {
+        background-color: var(--color-red);
+        color: var(--color-white);
+    }
 
 </style>
+

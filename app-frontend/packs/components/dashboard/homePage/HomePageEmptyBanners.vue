@@ -1,6 +1,7 @@
 <template>
 
-    <section class="tt-home-page-empty-banners">
+    <section
+        class="tt-home-page-empty-banners">
 
         <svg class="tt-home-page-empty-banners__image" width="537" height="229" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path fill="url(#a)" d="M0 0h537v228.535H0z"/>
@@ -16,9 +17,12 @@
             </defs>
         </svg>
 
-        <UiButton class="tt-page__tt-button tt-page__tt-button--second"
-                  :typeButton="'button'"
-                  @click="createNewBanner">Create new banner</UiButton>
+        <Button
+            class="tt-page__button tt-page__button--second"
+            :type="'button'"
+            @onClick="createBanner">
+            Create new banner
+        </Button>
 
     </section>
 
@@ -26,17 +30,16 @@
 
 <script>
 
-import UiButton from '../../core/UI/UiButton';
+import Button from '../../baseComponents/Button';
 
 export default {
     name: 'HomePageEmptyBanner',
     components: {
-        UiButton
+        Button
     },
     methods: {
-        createNewBanner() {
-            this.$emit('clickNewBannerEmpty');
-            console.log('1')
+        createBanner() {
+            this.$emit('create');
         }
     }
 }
@@ -45,20 +48,25 @@ export default {
 
 <style scoped>
 
-.tt-home-page-empty-banners {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
+    .tt-home-page-empty-banners {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 
-.tt-home-page-empty-banners__image {
-    margin-bottom: 40px;
-}
+    .tt-home-page-empty-banners__image {
+        margin-bottom: 40px;
+    }
 
-.tt-page__tt-button--second {
-    width: 250px;
-    background-color: var(--color-red);
-    color: var(--color-white);
-}
+    .tt-page__button--second {
+        width: 200px;
+        background-color: var(--color-red);
+        color: var(--color-white);
+    }
+
+    .tt-page__button--second:hover {
+        background-color: var(--color-white);
+        color: var(--color-red);
+    }
 
 </style>

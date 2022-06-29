@@ -1,8 +1,18 @@
 <template>
 
-    <HomePageEmptyBanner @clickNewBannerEmpty="createNewBanner" v-if="isShowBlock"></HomePageEmptyBanner>
+    <div v-if="!isLoading">
 
-    <HomePageWithBanners @clickNewBanner="createNewBanner" v-else></HomePageWithBanners>
+        <HomePageEmptyBanner
+            @create="createBanner"
+            v-if="isShowBlock"/>
+
+        <HomePageWithBanners
+            @create="createBanner"
+            v-else/>
+
+    </div>
+
+    <LoaderPage v-if="isLoading"/>
 
 </template>
 
@@ -10,27 +20,35 @@
 
 import HomePageEmptyBanner from "./HomePageEmptyBanners";
 import HomePageWithBanners from "./HomePageWithBanners";
+import router from "../../../router/router";
+import axios from "axios";
+import LoaderPage from "../../baseComponents/LoaderPage";
 
 export default {
     name: 'HomePageView',
     components: {
+        LoaderPage,
         HomePageWithBanners,
         HomePageEmptyBanner,
     },
     data() {
         return {
-            isShowBlock: true,
+            isShowBlock: false,
+            isLoading: false
         }
     },
     methods: {
-        createNewBanner() {
-            console.log('yes')
-        }
+        createBanner() {
+            router.push('/editor');
+        },
+        fetchBanners() {
+            this.isLoading = true;
+            axios.get('')
+                .finally( () => this.isLoading = false)
+        },
     },
-    computed: {
-        // createNewBanner() {
-        //     console.log('yes')
-        // }
+    mounted() {
+        this.fetchBanners()
     }
 }
 

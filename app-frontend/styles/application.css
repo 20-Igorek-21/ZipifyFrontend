@@ -31,13 +31,17 @@ html,body {
   justify-content: center;
   align-items: center;
   border: none;
-  font-size: 22px;
+  font-size: 18px;
   cursor: pointer;
   overflow: hidden;
 }
 
-.tt-page__tt-button {
-  height: 50px;
+.tt-text {
+  margin: 0;
+}
+
+.tt-page__button {
+  height: 40px;
   border-radius: 4px;
 }
 
