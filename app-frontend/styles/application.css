@@ -14,7 +14,7 @@ html,body {
   min-width: 320px;
   margin: 0;
   font-family: "Roboto", sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 20px;
   background-color: #F1F1F1;
   scroll-behavior: smooth;
@@ -43,6 +43,14 @@ html,body {
 .tt-page__button {
   height: 40px;
   border-radius: 4px;
+  background-color: var(--color-white);
+  color: var(--color-red);
+  border: 2px solid var(--color-red);
+}
+
+.tt-page__button:hover {
+  background-color: var(--color-red);
+  color: var(--color-white);
 }
 
 .tt-link:hover {

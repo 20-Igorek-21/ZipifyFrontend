@@ -3,13 +3,15 @@
     <button
         class="tt-button"
         :type="type"
-        @click="onClick">
-            <slot/>
+        @click="onClick"
+    >
+        <slot/>
     </button>
 
 </template>
 
 <script>
+
 export default {
     name: 'Button',
     methods: {
@@ -24,4 +26,5 @@ export default {
         }
     }
 }
+
 </script>

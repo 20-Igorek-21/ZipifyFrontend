@@ -1,22 +1,30 @@
 <template>
 
-    <div class="container-loader">
-        <div class="container-loader__loader">
-            <span class="loader__moving-indicator"></span>
+    <div
+        class="tt-loader"
+    >
+        <div
+            class="tt-loader__inner"
+        >
+            <span
+                class="tt-loader__moving-indicator"
+            />
         </div>
     </div>
 
 </template>
 
 <script>
+
 export default {
     name: "LoaderPage"
 }
+
 </script>
 
 <style scoped>
 
-    .container-loader {
+    .tt-loader {
         position: relative;
         width: 100%;
         height: 100%;
@@ -25,7 +33,7 @@ export default {
         align-items: center;
     }
 
-    .container-loader .container-loader__loader {
+    .tt-loader .tt-loader__inner {
         position: relative;
         width: 200px;
         height: 200px;
@@ -34,7 +42,7 @@ export default {
         animation: animateLoader 1s linear infinite;
     }
 
-    .container-loader .container-loader__loader::before {
+    .tt-loader .tt-loader__inner::before {
         content: "";
         position: absolute;
         top: 0;
@@ -48,7 +56,7 @@ export default {
         border-bottom-left-radius: 100px;
     }
 
-    .container-loader .container-loader__loader::after {
+    .tt-loader .tt-loader__inner::after {
         content: "";
         position: absolute;
         top: 0;
@@ -58,15 +66,15 @@ export default {
         height: 20px;
         border-radius: 50%;
         z-index: 10;
-        background: #fc3747;
+        background-color: var(--color-red);
     }
 
-    .container-loader .container-loader__loader::after {
-        box-shadow: 0 0 10px #fc3747,
-        0 0 40px #fc3747;
+    .tt-loader .tt-loader__inner::after {
+        box-shadow: 0 0 10px var(--color-red),
+        0 0 40px var(--color-red);
     }
 
-    .container-loader .container-loader__loader .loader__moving-indicator {
+    .tt-loader .tt-loader__inner .tt-loader__moving-indicator {
         position: absolute;
         top: 20px;
         bottom: 20px;

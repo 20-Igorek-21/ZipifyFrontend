@@ -1,18 +1,24 @@
 <template>
 
-    <div v-if="!isLoading">
+    <div
+        v-if="!$store.state.isLoader"
+    >
 
         <HomePageEmptyBanner
             @create="createBanner"
-            v-if="isShowBlock"/>
+            v-if="$store.state.isDataLength"
+        />
 
         <HomePageWithBanners
             @create="createBanner"
-            v-else/>
+            v-else
+        />
 
     </div>
 
-    <LoaderPage v-if="isLoading"/>
+    <LoaderPage
+        v-if="$store.state.isLoader"
+    />
 
 </template>
 
@@ -21,8 +27,8 @@
 import HomePageEmptyBanner from "./HomePageEmptyBanners";
 import HomePageWithBanners from "./HomePageWithBanners";
 import router from "../../../router/router";
-import axios from "axios";
 import LoaderPage from "../../baseComponents/LoaderPage";
+import { mapActions } from 'vuex'
 
 export default {
     name: 'HomePageView',
@@ -31,21 +37,13 @@ export default {
         HomePageWithBanners,
         HomePageEmptyBanner,
     },
-    data() {
-        return {
-            isShowBlock: false,
-            isLoading: false
-        }
-    },
     methods: {
         createBanner() {
             router.push('/editor');
         },
-        fetchBanners() {
-            this.isLoading = true;
-            axios.get('')
-                .finally( () => this.isLoading = false)
-        },
+        ...mapActions({
+            fetchBanners: 'banners/fetchBanners',
+        })
     },
     mounted() {
         this.fetchBanners()

@@ -1,15 +1,24 @@
 <template>
 
-    <header class="tt-page__header">
-        <router-link to="/" class="tt-link tt-page__link-logo">Tik Tok Banner</router-link>
+    <header
+        class="tt-page__header"
+    >
+        <router-link
+            to="/"
+            class="tt-link tt-page__link-logo"
+        >
+            Tik Tok Banner
+        </router-link>
     </header>
 
 </template>
 
 <script>
+
 export default {
     name: "HeaderPage"
 }
+
 </script>
 
 <style scoped>

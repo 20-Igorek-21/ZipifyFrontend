@@ -1,22 +1,34 @@
 <template>
 
     <section
-        class="tt-home-page-with-banners">
+        class="tt-home-page-with-banners"
+    >
 
-            <HomePageBanner
-                @onDeleteBanner="onDeleteBanner"/>
+        <HomePageBanner
+            v-for="banner of banners"
+            :key="banner"
+            :banner="banner"
+            @onDeleteBanner="onDeleteBanner"
+        />
 
             <Button
                 class="tt-page__button tt-page__button--first"
                 :type="'button'"
-                @onClick="createBanner">
+                @onClick="this.$emit('create')"
+            >
                 Create new banner
             </Button>
+
     </section>
 
-    <HomePagePopup v-if="isShowPopup"
-                   :idBanner="idBanner"
-                   @onClosePopup="isShowPopup = false"/>
+    <Confirm
+        v-if="isShowPopup"
+        @confirm="isShowPopup = false"
+    >
+        <HomePagePopup
+            @onClosePopup="isShowPopup = false"
+        />
+    </Confirm>
 
 </template>
 
@@ -25,33 +37,34 @@
 import Button from "../../baseComponents/Button";
 import HomePageBanner from "./HomePageBanner";
 import HomePagePopup from "./HomePagePopup";
+import Confirm from "../../baseComponents/Confirm";
+import { mapState } from "vuex";
 
 export default {
     name: "HomePageWithBanners",
-
     components: {
+        Confirm,
         HomePagePopup,
         HomePageBanner,
         Button
     },
-
     data() {
         return {
             isShowPopup: false,
-            idBanner: '',
         }
     },
-
     methods: {
-        createBanner() {
-            this.$emit('create');
-        },
-        onDeleteBanner(id) {
-            this.idBanner = id;
+        onDeleteBanner() {
             this.isShowPopup = true;
         },
-    }
+    },
+    computed: {
+        ...mapState({
+            banners: state => state.banners
+        })
+    },
 }
+
 </script>
 
 <style scoped>
@@ -61,14 +74,6 @@ export default {
         position: absolute;
         bottom: 50px;
         right: 70px;
-        background-color: var(--color-white);
-        color: var(--color-red);
-        border: 2px solid var(--color-red);
-    }
-
-    .tt-page__button--first:hover {
-        background-color: var(--color-red);
-        color: var(--color-white);
     }
 
 </style>
