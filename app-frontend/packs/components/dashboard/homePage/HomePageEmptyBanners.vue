@@ -1,8 +1,6 @@
 <template>
 
-    <section
-        class="tt-home-page-empty-banners"
-    >
+    <section class="tt-home-page-empty-banners">
 
         <svg class="tt-home-page-empty-banners__image" width="537" height="229" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path fill="url(#a)" d="M0 0h537v228.535H0z"/>

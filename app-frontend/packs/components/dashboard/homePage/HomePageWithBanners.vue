@@ -1,8 +1,6 @@
 <template>
 
-    <section
-        class="tt-home-page-with-banners"
-    >
+    <section class="tt-home-page-with-banners">
 
         <HomePageBanner
             v-for="banner of banners"
@@ -25,9 +23,7 @@
         v-if="isShowPopup"
         @confirm="isShowPopup = false"
     >
-        <HomePagePopup
-            @onClosePopup="isShowPopup = false"
-        />
+        <HomePagePopup @onClosePopup="isShowPopup = false"/>
     </Confirm>
 
 </template>

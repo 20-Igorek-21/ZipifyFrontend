@@ -1,25 +1,15 @@
 <template>
 
-    <div
-        class="tt-home-page-banner"
-    >
+    <div class="tt-home-page-banner">
 
-        <h2
-            class="tt-text tt-home-page-banner__title"
-        >
+        <h2 class="tt-text tt-home-page-banner__title">
             {{ banner.title }}
         </h2>
 
-        <p
-            class="tt-text tt-home-page-banner__text"
-        >
-            {{ banner.content }}
-        </p>
+        <p class="tt-text tt-home-page-banner__text" v-html="banner.content"></p>
 
-        <p
-            class="tt-text tt-home-page-banner__background-color-product" :style="{ backgroundColor: 'red'}"
-        >
-        </p>
+
+        <p class="tt-text tt-home-page-banner__background-color-product" :style="{ backgroundColor: 'blue' }"/>
 
         <Button
             class="tt-home-page-banner__button tt-home-page-banner__button--first"
@@ -32,9 +22,9 @@
         </Button>
 
         <Button
-
             class="tt-home-page-banner__button tt-home-page-banner__button--second"
             :type="'button'"
+            @onClick="onChange(banner.id)"
         >
             <svg xmlns="http://www.w3.org/2000/svg" height="29px" width="29px" viewBox="0 0 24 24" fill="#4CD91A">
                 <g>
@@ -62,7 +52,7 @@
 <script>
 
 import Button from "../../baseComponents/Button";
-import {mapMutations} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
     name: "HomePageBanner",
@@ -73,16 +63,20 @@ export default {
         banner: {
             type: Object,
             required: true
-        }
+        },
     },
     methods: {
-       onDelete() {
-           this.$emit('onDeleteBanner')
-       },
-        ...mapMutations({
-            setIdBanner: 'banners/setIdBanner'
+        onDelete(id) {
+            this.$emit('onDeleteBanner')
+            this.$store.commit('banners/setIdBanner', id)
+        },
+        onChange() {
+            this.changeBanner()
+        },
+        ...mapActions({
+            changeBanner: "banners/changeBanner",
         })
-    }
+    },
 }
 
 </script>

@@ -1,14 +1,8 @@
 <template>
 
-    <div
-        class="tt-loader"
-    >
-        <div
-            class="tt-loader__inner"
-        >
-            <span
-                class="tt-loader__moving-indicator"
-            />
+    <div class="tt-loader">
+        <div class="tt-loader__inner">
+            <span class="tt-loader__moving-indicator"/>
         </div>
     </div>
 

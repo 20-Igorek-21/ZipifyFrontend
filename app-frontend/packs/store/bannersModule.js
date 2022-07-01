@@ -6,8 +6,9 @@ export const bannersModule = {
             isLoader: false,
             isDataLength: true,
             banners: [],
-            inputText: String,
-            inputColor: '#FFF',
+            inputText: '',
+            inputColor: '',
+            inputWysiwyg: '',
             idBanner: ''
         }
     },
@@ -30,6 +31,9 @@ export const bannersModule = {
         setInputColor(state, value) {
             state.inputColor = value;
         },
+        setInputWysiwyg(state, value) {
+            state.inputWysiwyg = value;
+        },
         setIdBanner(state, id) {
             this.state.idBanner = id;
         }
@@ -51,33 +55,41 @@ export const bannersModule = {
         async createBanner() {
             axios.post('/api/v1/banners', {
                 banner: {
-                    title: 'bghgjk,',
+                    title: this.state.banners.inputText,
                     style: {
-                        color: 'blue'
+                        color: this.state.banners.inputColor
                             },
-                    content: 25634,
+                    content: this.state.banners.inputWysiwyg,
                     product_id: 6909270392971
                 }
             })
-                .then( () => {})
+                .then( (res) => {
+                    console.log(res)
+                })
         },
-        async deleteBanner(id) {
-            axios.delete('/api/v1/banners/'+ id)
-                .then( (res) => console.log(res))
+        async deleteBanner({dispatch}) {
+            axios.delete('/api/v1/banners/' + this.state.idBanner)
+                .then( (res) => {
+                    dispatch('fetchBanners');
+                    console.log(res)
+                })
         },
         async changeBanner() {
-            axios.put('/api/v1/banners/545252', {
+            axios.put('/api/v1/banners/' + this.state.idBanner, {
                 banner: {
-                    title: 'bghgjk,',
+                    title: this.state.banners.inputText,
                     style: {
-                        color: 'blue'
-                            },
-                    content: 25634,
+                        color: this.state.banners.inputColor
+                    },
+                    content: this.state.banners.inputWysiwyg,
                     product_id: 6909113532555
                 }
             })
-                .then( () => {})
+                .then( (res) => {
+                    console.log(res)
+                })
         },
     },
     namespaced: true
+
 }

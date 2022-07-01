@@ -1,16 +1,15 @@
 <template>
 
-    <form class="tt-editor-form" @submit="formSubmit">
+    <form
+        class="tt-editor-form"
+        @submit="formSubmit"
+    >
 
-        <p
-            class="tt-text tt-editor-form__text"
-        >
+        <p class="tt-text tt-editor-form__text">
             Format your Banner for your site Customize everything from background color, to icons, to position, to margin width.
         </p>
 
-        <h3
-            class="tt-text tt-editor-form__title"
-        >
+        <h3 class="tt-text tt-editor-form__title">
             Name your banner
         </h3>
 
@@ -22,15 +21,14 @@
             placeholder="New banner"
         />
 
-        <h3
-            class="tt-text tt-editor-form__title"
-        >
+        <h3 class="tt-text tt-editor-form__title">
             Header text
         </h3>
 
-        <h3
-            class="tt-text tt-editor-form__title"
-        >
+        <Wysiwyg class="tt-editor-form__wysiwyg"
+                 @update:model-value-wysiwyg="setInputWysiwyg"/>
+
+        <h3 class="tt-text tt-editor-form__title">
             Banner background color
         </h3>
 
@@ -40,6 +38,10 @@
             @update:model-value="setInputColor"
             :type="'color'"
         />
+
+        <h3 class="tt-text tt-editor-form__title">
+            Banner background color
+        </h3>
 
         <Button
             class="tt-button tt-page__button tt-page__button--third"
@@ -57,17 +59,20 @@
 import { mapMutations, mapState, mapActions } from 'vuex';
 import Input from "../../baseComponents/Input";
 import Button from "../../baseComponents/Button";
+import Wysiwyg from "../../baseComponents/Wysiwyg";
 
 export default {
     name: "EditorPageEditForm",
     components: {
+        Wysiwyg,
         Button,
         Input
     },
     methods: {
         ...mapMutations({
             setInputText: 'banners/setInputText',
-            setInputColor: 'banners/setInputColor'
+            setInputColor: 'banners/setInputColor',
+            setInputWysiwyg: "banners/setInputWysiwyg"
         }),
         ...mapActions({
             createBanner: 'banners/createBanner',
@@ -79,8 +84,12 @@ export default {
     computed: {
         ...mapState({
             inputText: state => state.banners.inputText,
-            inputColor: state => state.banners.inputColor
+            inputColor: state => state.banners.inputColor,
+            inputWysiwyg: state => state.banners.inputWysiwyg
         })
+    },
+    mounted() {
+        this.$store.commit('banners/setInputColor', '#FFFFFF')
     }
 }
 </script>
@@ -91,7 +100,7 @@ export default {
         height: 700px;
         width: 405px;
         margin: 30px;
-        padding: 30px;
+        padding: 40px 30px 40px 30px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -131,6 +140,10 @@ export default {
         position: fixed;
         bottom: 50px;
         right: 50px;
+    }
+
+    .tt-editor-form__wysiwyg {
+        height: 80px;
     }
 
     .tt-editor-form__input-color:hover {

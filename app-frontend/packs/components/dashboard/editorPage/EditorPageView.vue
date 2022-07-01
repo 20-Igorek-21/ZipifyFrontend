@@ -1,11 +1,17 @@
 <template>
 
-    <div
-        class="tt-editor-page"
-    >
+    <div class="tt-editor-page">
+
         <EditorPageEditForm/>
 
         <EditorPagePreviewBanner/>
+
+        <router-link
+            class="tt-link tt-editor-page__link"
+            to="/"
+        >
+            Back
+        </router-link>
 
     </div>
 
@@ -25,10 +31,28 @@ export default {
 
     .tt-editor-page {
         width: 100%;
+        height: 100%;
         display: flex;
         justify-content: space-around;
         align-items: center;
         flex-wrap: wrap;
+    }
+
+    .tt-editor-page__link {
+        height: 40px;
+        width: 108px;
+        position: fixed;
+        bottom: 50px;
+        right: 210px;
+        border-radius: 4px;
+        background-color: var(--color-white);
+        color: var(--color-red);
+        border: 2px solid var(--color-red);
+    }
+
+    .tt-editor-page__link:hover {
+        background-color: var(--color-red);
+        color: var(--color-white);
     }
 
 </style>

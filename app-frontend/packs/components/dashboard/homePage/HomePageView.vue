@@ -1,8 +1,6 @@
 <template>
 
-    <div
-        v-if="!$store.state.isLoader"
-    >
+    <div v-if="!$store.state.isLoader">
 
         <HomePageEmptyBanner
             @create="createBanner"
@@ -16,9 +14,7 @@
 
     </div>
 
-    <LoaderPage
-        v-if="$store.state.isLoader"
-    />
+    <LoaderPage v-if="$store.state.isLoader"/>
 
 </template>
 

@@ -5,6 +5,8 @@
     <title>ZipifyBanners</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_bundle_tag 'application' %>
+    <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
   </head>
   <body>
     <%= content_tag(:div, nil, id: 'shopify-app-init', data: {

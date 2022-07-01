@@ -1,8 +1,6 @@
 <template>
 
-    <h4
-        class="tt-confirm__title"
-    >
+    <h4 class="tt-confirm__title">
         Do you want to delete?
     </h4>
 
@@ -31,30 +29,24 @@
 <script>
 
 import Button from "../../baseComponents/Button";
-import {mapActions, mapState} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
     name: "HomePagePopup",
-    components: {Button},
+    components: { Button },
     methods: {
         onDeleteCard() {
-            console.log(this.idBanner)
-            // this.deleteBanner();
+            this.deleteBanner();
+            this.$emit('onClosePopup')
         },
         ...mapActions({
-            deleteBanner: "banners/deleteBanner"
+            deleteBanner: "banners/deleteBanner",
         })
     },
-    computed: {
-        ...mapState({
-            idBanner: state => state.banners.idBanner()
-        })
-    }
 }
 </script>
 
 <style scoped>
-
 
     .tt-confirm__title {
         margin: 35px 0 0;

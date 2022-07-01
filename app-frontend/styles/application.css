@@ -11,7 +11,7 @@
 html,body {
   height: 100%;
   width: 100%;
-  min-width: 320px;
+  min-width: 800px;
   margin: 0;
   font-family: "Roboto", sans-serif;
   font-size: 17px;
@@ -21,8 +21,10 @@ html,body {
 }
 
 .tt-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
-  color: inherit;
   cursor: pointer;
 }
 
@@ -51,8 +53,4 @@ html,body {
 .tt-page__button:hover {
   background-color: var(--color-red);
   color: var(--color-white);
-}
-
-.tt-link:hover {
-  opacity: .8;
 }

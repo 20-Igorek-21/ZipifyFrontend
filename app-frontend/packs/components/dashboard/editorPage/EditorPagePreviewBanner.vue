@@ -4,7 +4,8 @@
         class="tt-preview"
         :style="{ backgroundColor: inputColor }"
     >
-        <h3>Text</h3>
+        <p v-html="this.innerWysiwyg"></p>
+
     </section>
 
 </template>
@@ -17,9 +18,10 @@ export default {
     name: "EditorPagePreviewBanner",
     computed: {
         ...mapState({
-            inputColor: state => state.banners.inputColor
+            inputColor: state => state.banners.inputColor,
+            innerWysiwyg: state => state.banners.inputWysiwyg
         })
-    }
+    },
 }
 
 </script>

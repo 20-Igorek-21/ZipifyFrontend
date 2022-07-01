@@ -1,8 +1,6 @@
 <template>
 
-    <header
-        class="tt-page__header"
-    >
+    <header class="tt-page__header">
         <router-link
             to="/"
             class="tt-link tt-page__link-logo"
@@ -37,6 +35,11 @@ export default {
         margin-left: 40px;
         font-size: 36px;
         font-weight: 600;
+        color: var(--color-white);
+    }
+
+    .tt-page__link-logo:hover {
+        opacity: .8;
     }
 
     @media (max-width: 450px) {
