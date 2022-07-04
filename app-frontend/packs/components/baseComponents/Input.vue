@@ -15,6 +15,7 @@ export default {
     props: {
         modelValue: [String, Number],
         type: String,
+        required: false
     },
     methods: {
         updateInput(event) {

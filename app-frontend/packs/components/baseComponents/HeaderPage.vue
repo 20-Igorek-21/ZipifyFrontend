@@ -2,8 +2,8 @@
 
     <header class="tt-page__header">
         <router-link
-            to="/"
             class="tt-link tt-page__link-logo"
+            to="/"
         >
             Tik Tok Banner
         </router-link>
@@ -22,7 +22,7 @@ export default {
 <style scoped>
 
     .tt-page__header {
-        height: 90px;
+        min-height: 70px;
         width: 100%;
         display: flex;
         justify-content: space-between;

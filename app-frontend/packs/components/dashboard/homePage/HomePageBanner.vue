@@ -6,10 +6,15 @@
             {{ banner.title }}
         </h2>
 
-        <p class="tt-text tt-home-page-banner__text" v-html="banner.content"></p>
+        <p
+            class="tt-text tt-home-page-banner__text"
+            v-html="banner.content"
+        />
 
-
-        <p class="tt-text tt-home-page-banner__background-color-product" :style="{ backgroundColor: 'blue' }"/>
+        <p
+            class="tt-text tt-home-page-banner__background-color-product"
+            :style="{ backgroundColor: banner.style.color }"
+        />
 
         <Button
             class="tt-home-page-banner__button tt-home-page-banner__button--first"
@@ -68,13 +73,14 @@ export default {
     methods: {
         onDelete(id) {
             this.$emit('onDeleteBanner')
-            this.$store.commit('banners/setIdBanner', id)
+            this.$store.commit('banners/setIdBannerDelete', id)
         },
-        onChange() {
-            this.changeBanner()
+        onChange(id) {
+            this.$store.commit('banners/setIdBannerChange', id)
+            this.fetchBanner()
         },
         ...mapActions({
-            changeBanner: "banners/changeBanner",
+            fetchBanner: "banners/fetchBanner",
         })
     },
 }

@@ -12,7 +12,7 @@
 
 <script>
 
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
     name: "EditorPagePreviewBanner",
@@ -29,7 +29,7 @@ export default {
 <style scoped>
 
     .tt-preview {
-        height: 80px;
+        height: 50px;
         width: 300px;
         margin-right: 30px;
         display: flex;

@@ -21,10 +21,12 @@
 
 import EditorPageEditForm from "./EditorPageEditForm";
 import EditorPagePreviewBanner from "./EditorPagePreviewBanner";
+
 export default {
     name: "EditorPageView",
     components: {EditorPagePreviewBanner, EditorPageEditForm},
 }
+
 </script>
 
 <style>

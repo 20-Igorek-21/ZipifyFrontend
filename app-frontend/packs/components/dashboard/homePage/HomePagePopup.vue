@@ -29,7 +29,7 @@
 <script>
 
 import Button from "../../baseComponents/Button";
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
     name: "HomePagePopup",

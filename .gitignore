@@ -36,9 +36,9 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-vue.config.js
-stylelint.config.js
-.eslintrc.js
+
+
+
 .env
 .idea
 .DS_Store

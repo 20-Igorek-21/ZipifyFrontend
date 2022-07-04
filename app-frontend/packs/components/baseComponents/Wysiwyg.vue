@@ -1,14 +1,20 @@
 <template>
 
-    <div class="tt-wysiwyg"  @click="updateInputWysiwyg" >
-        <div id="editor-container"
-             @keydown="updateInputWysiwyg"
+    <div
+        class="tt-wysiwyg"
+        @click="updateInputWysiwyg"
+    >
+        <div
+            id="editor-container"
+            @keyup="updateInputWysiwyg"
         />
     </div>
 
 </template>
 
 <script>
+
+import {MAX_LENGTH_WYSIWYG} from "../../constants";
 
 export default {
     name: "Wysiwyg",
@@ -31,7 +37,12 @@ export default {
             });
         },
         updateInputWysiwyg() {
-            this.$emit('update:modelValueWysiwyg', this.quill.root.innerHTML)
+            this.$emit('update:modelValueWysiwygLength', this.quill.getText().length);
+
+            if (this.quill.getText().length < MAX_LENGTH_WYSIWYG) {
+                this.$emit('update:modelValueWysiwyg', this.quill.root.innerHTML);
+            }
+
         },
     },
     mounted() {
@@ -45,7 +56,7 @@ export default {
 
     .tt-wysiwyg {
         width: 100%;
-        margin-bottom: 40px;
+        margin-bottom: 42px;
     }
 
 </style>

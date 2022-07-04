@@ -3,7 +3,7 @@
     <section class="tt-home-page-with-banners">
 
         <HomePageBanner
-            v-for="banner of banners"
+            v-for="banner of dataBanners"
             :key="banner"
             :banner="banner"
             @onDeleteBanner="onDeleteBanner"
@@ -21,9 +21,9 @@
 
     <Confirm
         v-if="isShowPopup"
-        @confirm="isShowPopup = false"
+        @confirm="onClosePopup"
     >
-        <HomePagePopup @onClosePopup="isShowPopup = false"/>
+        <HomePagePopup @onClosePopup="onClosePopup"/>
     </Confirm>
 
 </template>
@@ -34,7 +34,7 @@ import Button from "../../baseComponents/Button";
 import HomePageBanner from "./HomePageBanner";
 import HomePagePopup from "./HomePagePopup";
 import Confirm from "../../baseComponents/Confirm";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
     name: "HomePageWithBanners",
@@ -53,10 +53,13 @@ export default {
         onDeleteBanner() {
             this.isShowPopup = true;
         },
+        onClosePopup() {
+            this.isShowPopup = false;
+        }
     },
     computed: {
         ...mapState({
-            banners: state => state.banners
+            dataBanners: state => state.dataBanners
         })
     },
 }

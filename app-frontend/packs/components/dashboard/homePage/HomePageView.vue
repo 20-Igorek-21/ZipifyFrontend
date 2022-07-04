@@ -2,7 +2,7 @@
 
     <div v-if="!$store.state.isLoader">
 
-        <HomePageEmptyBanner
+        <HomePageEmptyState
             @create="createBanner"
             v-if="$store.state.isDataLength"
         />
@@ -20,18 +20,18 @@
 
 <script>
 
-import HomePageEmptyBanner from "./HomePageEmptyBanners";
+import HomePageEmptyState from "./HomePageEmptyState";
 import HomePageWithBanners from "./HomePageWithBanners";
 import router from "../../../router/router";
 import LoaderPage from "../../baseComponents/LoaderPage";
-import { mapActions } from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
     name: 'HomePageView',
     components: {
         LoaderPage,
         HomePageWithBanners,
-        HomePageEmptyBanner,
+        HomePageEmptyState,
     },
     methods: {
         createBanner() {

@@ -6,34 +6,56 @@
     >
 
         <p class="tt-text tt-editor-form__text">
-            Format your Banner for your site Customize everything from background color, to icons, to position, to margin width.
+            Format your Banner for your site Customize everything from background color, to icons, to position, to
+            margin width.
         </p>
 
         <h3 class="tt-text tt-editor-form__title">
             Name your banner
         </h3>
 
-        <Input
-            class="tt-editor-form__input-text"
-            :modelValue="inputText"
-            @update:model-value="setInputText"
-            :type="'text'"
-            placeholder="New banner"
-        />
+        <div class="tt-editor-form__box-input">
+            <Input
+                class="tt-editor-form__text-input"
+                :modelValue="inputText"
+                @update:model-value="setInputText"
+                :type="'text'"
+                placeholder="New banner"
+            />
+            <p
+                class="tt-text tt-editor-form__message"
+                v-if="this.v$.inputText.$dirty && this.v$.inputText.$invalid"
+            >
+                This field is invalid.
+            </p>
+        </div>
+
 
         <h3 class="tt-text tt-editor-form__title">
             Header text
         </h3>
 
-        <Wysiwyg class="tt-editor-form__wysiwyg"
-                 @update:model-value-wysiwyg="setInputWysiwyg"/>
+        <div class="tt-editor-form__box-input">
+            <Wysiwyg
+                class="tt-editor-form__wysiwyg"
+                :content="inputWysiwyg"
+                @update:modelValueWysiwygLength="setInputWysiwygLength"
+                @update:model-value-wysiwyg="setInputWysiwyg"
+            />
+            <p
+                class="tt-text tt-editor-form__message"
+                v-if="this.v$.inputText.$dirty && ((this.inputWysiwygLength < 2) || (this.inputWysiwygLength >= 20))"
+            >
+                This field is invalid.
+            </p>
+        </div>
 
         <h3 class="tt-text tt-editor-form__title">
             Banner background color
         </h3>
 
         <Input
-            class="tt-editor-form__input-color"
+            class="tt-editor-form__color-input"
             :modelValue="inputColor"
             @update:model-value="setInputColor"
             :type="'color'"
@@ -56,10 +78,13 @@
 
 <script>
 
-import { mapMutations, mapState, mapActions } from 'vuex';
+import {mapMutations, mapState, mapActions} from 'vuex';
 import Input from "../../baseComponents/Input";
 import Button from "../../baseComponents/Button";
 import Wysiwyg from "../../baseComponents/Wysiwyg";
+import useVuelidate from "@vuelidate/core";
+import {maxLength, required} from "@vuelidate/validators";
+import {MAX_LENGTH_TITLE, MAX_LENGTH_WYSIWYG} from "../../../constants";
 
 export default {
     name: "EditorPageEditForm",
@@ -68,28 +93,57 @@ export default {
         Button,
         Input
     },
+    setup: () => ({v$: useVuelidate()}),
+    validations() {
+        return {
+            inputText: {required, maxlength: maxLength(MAX_LENGTH_TITLE)},
+        }
+    },
     methods: {
         ...mapMutations({
             setInputText: 'banners/setInputText',
             setInputColor: 'banners/setInputColor',
-            setInputWysiwyg: "banners/setInputWysiwyg"
+            setInputWysiwyg: "banners/setInputWysiwyg",
+            setInputWysiwygLength: "banners/setInputWysiwygLength",
         }),
         ...mapActions({
             createBanner: 'banners/createBanner',
+            changeBanner: 'banners/changeBanner',
+            clearFields: 'banners/clearFields',
         }),
         formSubmit() {
-            this.createBanner();
+            this.$store.commit('banners/setLoader', true);
+            this.v$.inputText.$dirty = true;
+            if (!this.v$.inputText.$invalid && (this.inputWysiwygLength >= 2) && (this.inputWysiwygLength < MAX_LENGTH_WYSIWYG)) {
+                if (this.$store.state.idBannerChange) {
+                    this.changeBanner();
+                } else {
+                    this.createBanner();
+                }
+            }
         }
     },
     computed: {
         ...mapState({
             inputText: state => state.banners.inputText,
             inputColor: state => state.banners.inputColor,
-            inputWysiwyg: state => state.banners.inputWysiwyg
+            inputWysiwyg: state => state.banners.inputWysiwyg,
+            inputWysiwygLength: state => state.banners.inputWysiwygLength,
+            idBannerChange: state => state.idBannerChange,
+            dataBanner: state => state.dataBanner
         })
     },
     mounted() {
-        this.$store.commit('banners/setInputColor', '#FFFFFF')
+        if (this.idBannerChange) {
+            this.$store.commit('banners/setInputText', this.dataBanner.title);
+            this.$store.commit('banners/setInputColor', this.dataBanner.style.color);
+            this.$store.commit('banners/setInputWysiwyg', this.dataBanner.content);
+        } else {
+            this.clearFields()
+        }
+    },
+    beforeUnmount() {
+        this.$store.commit('banners/setIdBannerChange', null);
     }
 }
 </script>
@@ -110,12 +164,17 @@ export default {
         box-shadow: 0 4px 8px rgb(0 0 0 / 15%), 0 8px 16px rgb(0 0 0 / 15%);
     }
 
-    .tt-editor-form__input-text {
+    .tt-editor-form__box-input {
+        width: 100%;
+        position: relative;
+    }
+
+    .tt-editor-form__text-input {
         padding-left: 12px;
         border: 1px solid var(--color-grey);
     }
 
-    .tt-editor-form__input-color {
+    .tt-editor-form__color-input {
         border: none;
     }
 
@@ -146,7 +205,14 @@ export default {
         height: 80px;
     }
 
-    .tt-editor-form__input-color:hover {
+    .tt-editor-form__message {
+        margin-top: 2px;
+        position: absolute;
+        color: var(--color-red);
+        font-size: 12px;
+    }
+
+    .tt-editor-form__color-input:hover {
         cursor: pointer;
     }
 

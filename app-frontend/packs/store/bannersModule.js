@@ -1,26 +1,30 @@
 import axios from "axios";
+import router from "../router/router";
 
 export const bannersModule = {
     state() {
         return {
-            isLoader: false,
+            isLoader: '',
             isDataLength: true,
-            banners: [],
+            dataBanners: [],
+            dataBanner: [],
             inputText: '',
             inputColor: '',
             inputWysiwyg: '',
-            idBanner: ''
+            inputWysiwygLength: 0,
+            idBannerDelete: null,
+            idBannerChange: null
         }
-    },
-    getters: {
-
     },
     mutations: {
         setLoader(state, value) {
             this.state.isLoader = value;
         },
-        setData(state, data) {
-            this.state.banners = data;
+        setDataBanners(state, data) {
+            this.state.dataBanners = data;
+        },
+        setDataBanner(state, data) {
+            this.state.dataBanner = data;
         },
         setDataLength(state, value) {
             this.state.isDataLength = value;
@@ -32,14 +36,20 @@ export const bannersModule = {
             state.inputColor = value;
         },
         setInputWysiwyg(state, value) {
-            state.inputWysiwyg = value;
+                state.inputWysiwyg = value;
         },
-        setIdBanner(state, id) {
-            this.state.idBanner = id;
+        setInputWysiwygLength(state, value) {
+            state.inputWysiwygLength = value;
+        },
+        setIdBannerDelete(state, id) {
+            this.state.idBannerDelete = id;
+        },
+        setIdBannerChange(state, id) {
+            this.state.idBannerChange = id;
         }
     },
     actions: {
-        async fetchBanners({commit}) {
+        fetchBanners({commit}) {
             commit('setLoader', true);
             axios.get('/api/v1/banners')
                 .then((res) => {
@@ -48,47 +58,65 @@ export const bannersModule = {
                     } else {
                         commit('setDataLength', true);
                     }
-                    commit('setData', res.data.data);
+                    commit('setDataBanners', res.data.data);
                 })
-            .finally( () => commit('setLoader', false))
+                .finally(() => commit('setLoader', false))
         },
-        async createBanner() {
+        fetchBanner({commit}) {
+            commit('setLoader', true);
+            axios.get('/api/v1/banners/'+ this.state.idBannerChange)
+                .then((res) => {
+                    commit('setDataBanner', res.data.data);
+                    router.push('editor');
+                })
+                .finally(() => commit('setLoader', false))
+        },
+        createBanner({dispatch}) {
             axios.post('/api/v1/banners', {
-                banner: {
-                    title: this.state.banners.inputText,
-                    style: {
-                        color: this.state.banners.inputColor
-                            },
-                    content: this.state.banners.inputWysiwyg,
-                    product_id: 6909270392971
-                }
-            })
-                .then( (res) => {
-                    console.log(res)
-                })
-        },
-        async deleteBanner({dispatch}) {
-            axios.delete('/api/v1/banners/' + this.state.idBanner)
-                .then( (res) => {
-                    dispatch('fetchBanners');
-                    console.log(res)
-                })
-        },
-        async changeBanner() {
-            axios.put('/api/v1/banners/' + this.state.idBanner, {
                 banner: {
                     title: this.state.banners.inputText,
                     style: {
                         color: this.state.banners.inputColor
                     },
                     content: this.state.banners.inputWysiwyg,
-                    product_id: 6909113532555
+                    product_id: 6909106094219
                 }
             })
-                .then( (res) => {
+                .then((res) => {
+                    dispatch('clearFields')
                     console.log(res)
                 })
         },
+        deleteBanner({commit, dispatch}) {
+            commit('setLoader', true);
+            axios.delete('/api/v1/banners/' + this.state.idBannerDelete)
+                .then((res) => {
+                    dispatch('fetchBanners');
+                    console.log(res)
+                })
+                .finally(() => commit('setLoader', false))
+        },
+        changeBanner() {
+            axios.put('/api/v1/banners/' + this.state.idBannerChange, {
+                banner: {
+                    title: this.state.banners.inputText,
+                    style: {
+                        color: this.state.banners.inputColor
+                    },
+                    content: this.state.banners.inputWysiwyg,
+                    product_id: 6909106094219
+                }
+            })
+                .then((res) => {
+                    console.log(res)
+
+                })
+        },
+        clearFields({commit}) {
+            commit('setInputText', '');
+            commit('setInputColor', '#FFFFFF');
+            commit('setInputWysiwyg', '');
+        }
     },
     namespaced: true
 

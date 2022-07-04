@@ -31,7 +31,7 @@
 import Button from '../../baseComponents/Button';
 
 export default {
-    name: 'HomePageEmptyBanner',
+    name: 'HomePageEmptyState',
     components: {
         Button
     },
