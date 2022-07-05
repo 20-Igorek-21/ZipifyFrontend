@@ -68,6 +68,12 @@ export default {
 
 <style scoped>
 
+    .tt-home-page-with-banners {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
     .tt-page__button--first {
         width: 200px;
         position: absolute;

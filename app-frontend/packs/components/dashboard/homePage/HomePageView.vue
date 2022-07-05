@@ -1,10 +1,10 @@
 <template>
 
-    <div v-if="!$store.state.isLoader">
+    <div v-if="!isLoader">
 
         <HomePageEmptyState
             @create="createBanner"
-            v-if="$store.state.isDataLength"
+            v-if="isDataLength"
         />
 
         <HomePageWithBanners
@@ -14,7 +14,7 @@
 
     </div>
 
-    <LoaderPage v-if="$store.state.isLoader"/>
+    <LoaderPage v-if="isLoader"/>
 
 </template>
 
@@ -24,7 +24,7 @@ import HomePageEmptyState from "./HomePageEmptyState";
 import HomePageWithBanners from "./HomePageWithBanners";
 import router from "../../../router/router";
 import LoaderPage from "../../baseComponents/LoaderPage";
-import {mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 
 export default {
     name: 'HomePageView',
@@ -39,6 +39,12 @@ export default {
         },
         ...mapActions({
             fetchBanners: 'banners/fetchBanners',
+        })
+    },
+    computed: {
+        ...mapState ({
+            isLoader: state => state.isLoader,
+            isDataLength: state => state.isDataLength
         })
     },
     mounted() {

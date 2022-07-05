@@ -2,7 +2,7 @@
 
     <form
         class="tt-editor-form"
-        @submit="formSubmit"
+        @submit.prevent="formSubmit"
     >
 
         <p class="tt-text tt-editor-form__text">
@@ -38,7 +38,7 @@
         <div class="tt-editor-form__box-input">
             <Wysiwyg
                 class="tt-editor-form__wysiwyg"
-                :content="inputWysiwyg"
+                :inputWysiwyg="inputWysiwyg"
                 @update:modelValueWysiwygLength="setInputWysiwygLength"
                 @update:model-value-wysiwyg="setInputWysiwyg"
             />
@@ -109,13 +109,12 @@ export default {
         ...mapActions({
             createBanner: 'banners/createBanner',
             changeBanner: 'banners/changeBanner',
-            clearFields: 'banners/clearFields',
         }),
         formSubmit() {
             this.$store.commit('banners/setLoader', true);
             this.v$.inputText.$dirty = true;
             if (!this.v$.inputText.$invalid && (this.inputWysiwygLength >= 2) && (this.inputWysiwygLength < MAX_LENGTH_WYSIWYG)) {
-                if (this.$store.state.idBannerChange) {
+                if (this.idBannerChange) {
                     this.changeBanner();
                 } else {
                     this.createBanner();
@@ -134,16 +133,18 @@ export default {
         })
     },
     mounted() {
+        this.$store.commit('banners/setInputColor', '#FFFFFF');
         if (this.idBannerChange) {
             this.$store.commit('banners/setInputText', this.dataBanner.title);
             this.$store.commit('banners/setInputColor', this.dataBanner.style.color);
             this.$store.commit('banners/setInputWysiwyg', this.dataBanner.content);
-        } else {
-            this.clearFields()
         }
     },
     beforeUnmount() {
         this.$store.commit('banners/setIdBannerChange', null);
+        this.$store.commit('banners/setInputText', '');
+        this.$store.commit('banners/setInputColor', '#FFFFFF');
+        this.$store.commit('banners/setInputWysiwyg', '');
     }
 }
 </script>
@@ -152,7 +153,7 @@ export default {
 
     .tt-editor-form {
         height: 700px;
-        width: 405px;
+        width: 350px;
         margin: 30px;
         padding: 40px 30px 40px 30px;
         display: flex;

@@ -10,6 +10,7 @@
         />
     </div>
 
+
 </template>
 
 <script>
@@ -28,7 +29,19 @@ export default {
             ]
         }
     },
+    props: {
+        inputWysiwyg: String,
+
+    },
     methods: {
+
+        setInput() {
+            const value = this.inputWysiwyg;
+            const delta = this.quill.clipboard.convert(value);
+            this.quill.setContents(delta, 'user');
+            this.updateInputWysiwyg();
+
+        },
         editorWysiwyg() {
             this.quill = new Quill('#editor-container', {
                 modules: { toolbar: this.toolbarOptions },
@@ -38,15 +51,17 @@ export default {
         },
         updateInputWysiwyg() {
             this.$emit('update:modelValueWysiwygLength', this.quill.getText().length);
-
             if (this.quill.getText().length < MAX_LENGTH_WYSIWYG) {
                 this.$emit('update:modelValueWysiwyg', this.quill.root.innerHTML);
             }
-
         },
+
     },
     mounted() {
-        this.editorWysiwyg()
+        this.editorWysiwyg();
+    },
+    beforeUnmount() {
+
     }
 }
 

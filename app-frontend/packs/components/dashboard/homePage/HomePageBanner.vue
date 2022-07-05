@@ -19,16 +19,6 @@
         <Button
             class="tt-home-page-banner__button tt-home-page-banner__button--first"
             :type="'button'"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" height="29px" width="29px" viewBox="0 0 24 24" fill="#000000">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-            </svg>
-        </Button>
-
-        <Button
-            class="tt-home-page-banner__button tt-home-page-banner__button--second"
-            :type="'button'"
             @onClick="onChange(banner.id)"
         >
             <svg xmlns="http://www.w3.org/2000/svg" height="29px" width="29px" viewBox="0 0 24 24" fill="#4CD91A">
@@ -40,7 +30,7 @@
         </Button>
 
         <Button
-            class="tt-home-page-banner__button tt-home-page-banner__button--third"
+            class="tt-home-page-banner__button tt-home-page-banner__button--second"
             :type="'button'"
             @onClick="onDelete(banner.id)"
         >
@@ -134,10 +124,6 @@ export default {
     }
 
     .tt-home-page-banner__button--second {
-        top: 72px;
-    }
-
-    .tt-home-page-banner__button--third {
         bottom: 14px;
     }
 

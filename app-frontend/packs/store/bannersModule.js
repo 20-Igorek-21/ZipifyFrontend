@@ -71,7 +71,7 @@ export const bannersModule = {
                 })
                 .finally(() => commit('setLoader', false))
         },
-        createBanner({dispatch}) {
+        createBanner() {
             axios.post('/api/v1/banners', {
                 banner: {
                     title: this.state.banners.inputText,
@@ -79,20 +79,18 @@ export const bannersModule = {
                         color: this.state.banners.inputColor
                     },
                     content: this.state.banners.inputWysiwyg,
-                    product_id: 6909106094219
+                    product_id: 6909270392971
                 }
             })
-                .then((res) => {
-                    dispatch('clearFields')
-                    console.log(res)
+                .then(() => {
+                    router.push('/');
                 })
         },
         deleteBanner({commit, dispatch}) {
             commit('setLoader', true);
             axios.delete('/api/v1/banners/' + this.state.idBannerDelete)
-                .then((res) => {
+                .then(() => {
                     dispatch('fetchBanners');
-                    console.log(res)
                 })
                 .finally(() => commit('setLoader', false))
         },
@@ -107,16 +105,10 @@ export const bannersModule = {
                     product_id: 6909106094219
                 }
             })
-                .then((res) => {
-                    console.log(res)
-
+                .then(() => {
+                    router.push('/');
                 })
         },
-        clearFields({commit}) {
-            commit('setInputText', '');
-            commit('setInputColor', '#FFFFFF');
-            commit('setInputWysiwyg', '');
-        }
     },
     namespaced: true
 
