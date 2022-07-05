@@ -39,12 +39,12 @@
             <Wysiwyg
                 class="tt-editor-form__wysiwyg"
                 :inputWysiwyg="inputWysiwyg"
-                @update:modelValueWysiwygLength="setInputWysiwygLength"
+                @update:modelValueWysiwygLength="setInputLengthWysiwyg"
                 @update:model-value-wysiwyg="setInputWysiwyg"
             />
             <p
                 class="tt-text tt-editor-form__message"
-                v-if="this.v$.inputText.$dirty && ((this.inputWysiwygLength < 2) || (this.inputWysiwygLength >= 20))"
+                v-if="this.v$.inputText.$dirty && ((this.inputLengthWysiwyg < 2) || (this.inputLengthWysiwyg >= 20))"
             >
                 This field is invalid.
             </p>
@@ -84,7 +84,9 @@ import Button from "../../baseComponents/Button";
 import Wysiwyg from "../../baseComponents/Wysiwyg";
 import useVuelidate from "@vuelidate/core";
 import {maxLength, required} from "@vuelidate/validators";
-import {MAX_LENGTH_TITLE, MAX_LENGTH_WYSIWYG} from "../../../constants";
+import {MAX_LENGTH_TITLE, MAX_LENGTH_WYSIWYG, MIN_LENGTH_WYSIWYG} from "../../../constants";
+import {ResourcePicker} from "@shopify/app-bridge/actions";
+import app from "../../../shared/shopifyApp";
 
 export default {
     name: "EditorPageEditForm",
@@ -100,11 +102,21 @@ export default {
         }
     },
     methods: {
+        resourcePicker() {
+            const productPicker = ResourcePicker.create(app, {
+                resourceType: ResourcePicker.ResourceType.Product,
+                options: {
+                    selectMultiple: true,
+                    showHidden: false,
+                },
+            });
+            productPicker.dispatch(ResourcePicker.Action.OPEN)
+        },
         ...mapMutations({
             setInputText: 'banners/setInputText',
             setInputColor: 'banners/setInputColor',
             setInputWysiwyg: "banners/setInputWysiwyg",
-            setInputWysiwygLength: "banners/setInputWysiwygLength",
+            setInputLengthWysiwyg: "banners/setInputLengthWysiwyg",
         }),
         ...mapActions({
             createBanner: 'banners/createBanner',
@@ -113,23 +125,23 @@ export default {
         formSubmit() {
             this.$store.commit('banners/setLoader', true);
             this.v$.inputText.$dirty = true;
-            if (!this.v$.inputText.$invalid && (this.inputWysiwygLength >= 2) && (this.inputWysiwygLength < MAX_LENGTH_WYSIWYG)) {
+            if (!this.v$.inputText.$invalid && (this.inputLengthWysiwyg >= MIN_LENGTH_WYSIWYG) && (this.inputLengthWysiwyg < MAX_LENGTH_WYSIWYG)) {
                 if (this.idBannerChange) {
                     this.changeBanner();
                 } else {
                     this.createBanner();
                 }
             }
-        }
+        },
     },
     computed: {
         ...mapState({
             inputText: state => state.banners.inputText,
             inputColor: state => state.banners.inputColor,
             inputWysiwyg: state => state.banners.inputWysiwyg,
-            inputWysiwygLength: state => state.banners.inputWysiwygLength,
-            idBannerChange: state => state.idBannerChange,
-            dataBanner: state => state.dataBanner
+            inputLengthWysiwyg: state => state.banners.inputLengthWysiwyg,
+            idBannerChange: state => state.banners.idBannerChange,
+            dataBanner: state => state.banners.dataBanner
         })
     },
     mounted() {
@@ -143,7 +155,6 @@ export default {
     beforeUnmount() {
         this.$store.commit('banners/setIdBannerChange', null);
         this.$store.commit('banners/setInputText', '');
-        this.$store.commit('banners/setInputColor', '#FFFFFF');
         this.$store.commit('banners/setInputWysiwyg', '');
     }
 }
@@ -197,7 +208,7 @@ export default {
 
     .tt-page__button--third {
         width: 108px;
-        position: fixed;
+        position: absolute;
         bottom: 50px;
         right: 50px;
     }
@@ -215,6 +226,22 @@ export default {
 
     .tt-editor-form__color-input:hover {
         cursor: pointer;
+    }
+
+    @media (max-width: 750px) {
+
+        .tt-page__button--third {
+            top: 15px;
+            right: 10px;
+            background-color: var(--color-red);
+            color: var(--color-white);
+            border: 2px solid var(--color-white);
+        }
+
+        .tt-page__button--third:hover {
+            background-color: var(--color-white);
+            color: var(--color-red);
+        }
     }
 
 </style>

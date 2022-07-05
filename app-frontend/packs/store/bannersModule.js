@@ -5,29 +5,30 @@ export const bannersModule = {
     state() {
         return {
             isLoader: '',
-            isDataLength: true,
+            isLengthData: true,
             dataBanners: [],
             dataBanner: [],
             inputText: '',
             inputColor: '',
             inputWysiwyg: '',
-            inputWysiwygLength: 0,
+            inputLengthWysiwyg: 0,
             idBannerDelete: null,
-            idBannerChange: null
+            idBannerChange: null,
+            idProduct: null
         }
     },
     mutations: {
         setLoader(state, value) {
-            this.state.isLoader = value;
+            state.isLoader = value;
         },
         setDataBanners(state, data) {
-            this.state.dataBanners = data;
+            state.dataBanners = data;
         },
         setDataBanner(state, data) {
-            this.state.dataBanner = data;
+            state.dataBanner = data;
         },
-        setDataLength(state, value) {
-            this.state.isDataLength = value;
+        setLengthData(state, value) {
+            state.isLengthData = value;
         },
         setInputText(state, value) {
             state.inputText = value;
@@ -36,16 +37,19 @@ export const bannersModule = {
             state.inputColor = value;
         },
         setInputWysiwyg(state, value) {
-                state.inputWysiwyg = value;
+            state.inputWysiwyg = value;
         },
-        setInputWysiwygLength(state, value) {
-            state.inputWysiwygLength = value;
+        setInputLengthWysiwyg(state, value) {
+            state.inputLengthWysiwyg = value;
         },
         setIdBannerDelete(state, id) {
-            this.state.idBannerDelete = id;
+            state.idBannerDelete = id;
         },
         setIdBannerChange(state, id) {
-            this.state.idBannerChange = id;
+            state.idBannerChange = id;
+        },
+        setIdProduct(state, value) {
+            state.idProduct = value;
         }
     },
     actions: {
@@ -54,62 +58,57 @@ export const bannersModule = {
             axios.get('/api/v1/banners')
                 .then((res) => {
                     if (res.data.data.length) {
-                        commit('setDataLength', false);
+                        commit('setLengthData', false);
                     } else {
-                        commit('setDataLength', true);
+                        commit('setLengthData', true);
                     }
                     commit('setDataBanners', res.data.data);
                 })
-                .finally(() => commit('setLoader', false))
+                .finally(() => commit('setLoader', false));
         },
-        fetchBanner({commit}) {
+        fetchBanner({state,commit}) {
             commit('setLoader', true);
-            axios.get('/api/v1/banners/'+ this.state.idBannerChange)
+            axios.get('/api/v1/banners/'+ state.idBannerChange)
                 .then((res) => {
                     commit('setDataBanner', res.data.data);
                     router.push('editor');
                 })
-                .finally(() => commit('setLoader', false))
+                .finally(() => commit('setLoader', false));
         },
-        createBanner() {
+        createBanner({state}) {
             axios.post('/api/v1/banners', {
                 banner: {
-                    title: this.state.banners.inputText,
+                    title: state.inputText,
                     style: {
-                        color: this.state.banners.inputColor
+                        color: state.inputColor
                     },
-                    content: this.state.banners.inputWysiwyg,
-                    product_id: 6909270392971
-                }
-            })
-                .then(() => {
-                    router.push('/');
-                })
-        },
-        deleteBanner({commit, dispatch}) {
-            commit('setLoader', true);
-            axios.delete('/api/v1/banners/' + this.state.idBannerDelete)
-                .then(() => {
-                    dispatch('fetchBanners');
-                })
-                .finally(() => commit('setLoader', false))
-        },
-        changeBanner() {
-            axios.put('/api/v1/banners/' + this.state.idBannerChange, {
-                banner: {
-                    title: this.state.banners.inputText,
-                    style: {
-                        color: this.state.banners.inputColor
-                    },
-                    content: this.state.banners.inputWysiwyg,
+                    content: state.inputWysiwyg,
                     product_id: 6909106094219
                 }
             })
+                .then(() => router.push('/'));
+        },
+        deleteBanner({state, commit, dispatch}) {
+            commit('setLoader', true);
+            axios.delete('/api/v1/banners/' + state.idBannerDelete)
                 .then(() => {
-                    router.push('/');
+                    dispatch('fetchBanners');
                 })
+                .finally(() => commit('setLoader', false));
+        },
+        changeBanner({state}) {
+            axios.put('/api/v1/banners/' + state.idBannerChange, {
+                banner: {
+                    title: state.inputText,
+                    style: {
+                        color: state.inputColor
+                    },
+                    content: state.inputWysiwyg,
+                    product_id: 6909270392971
+                }
+            })
+                .then(() => router.push('/'));
         },
     },
     namespaced: true
-
 }

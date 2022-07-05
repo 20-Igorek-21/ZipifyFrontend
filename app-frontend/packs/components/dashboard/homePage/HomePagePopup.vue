@@ -37,7 +37,7 @@ export default {
     methods: {
         onDeleteCard() {
             this.deleteBanner();
-            this.$emit('onClosePopup')
+            this.$emit('onClosePopup');
         },
         ...mapActions({
             deleteBanner: "banners/deleteBanner",

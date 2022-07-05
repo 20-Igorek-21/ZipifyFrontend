@@ -42,7 +42,7 @@ export default {
         opacity: .8;
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 810px) {
         .tt-page__link-logo {
             margin-left: 20px;
             font-size: 30px;

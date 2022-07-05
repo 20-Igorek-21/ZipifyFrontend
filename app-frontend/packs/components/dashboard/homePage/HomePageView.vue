@@ -4,7 +4,7 @@
 
         <HomePageEmptyState
             @create="createBanner"
-            v-if="isDataLength"
+            v-if="isLengthData"
         />
 
         <HomePageWithBanners
@@ -43,12 +43,12 @@ export default {
     },
     computed: {
         ...mapState ({
-            isLoader: state => state.isLoader,
-            isDataLength: state => state.isDataLength
+            isLoader: state => state.banners.isLoader,
+            isLengthData: state => state.banners.isLengthData
         })
     },
     mounted() {
-        this.fetchBanners()
+        this.fetchBanners();
     }
 }
 

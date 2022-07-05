@@ -31,7 +31,7 @@ export default {
     .tt-preview {
         height: 50px;
         width: 300px;
-        margin-right: 30px;
+        margin: 0 10px 30px 10px;
         display: flex;
         align-items: center;
         justify-content: center;

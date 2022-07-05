@@ -43,7 +43,7 @@ export default {
     .tt-editor-page__link {
         height: 40px;
         width: 108px;
-        position: fixed;
+        position: absolute;
         bottom: 50px;
         right: 210px;
         border-radius: 4px;
@@ -55,6 +55,22 @@ export default {
     .tt-editor-page__link:hover {
         background-color: var(--color-red);
         color: var(--color-white);
+    }
+
+    @media (max-width: 750px) {
+
+        .tt-editor-page__link {
+            top: 15px;
+            right: 130px;
+            background-color: var(--color-red);
+            color: var(--color-white);
+            border: 2px solid var(--color-white);
+        }
+
+        .tt-editor-page__link:hover {
+            background-color: var(--color-white);
+            color: var(--color-red);
+        }
     }
 
 </style>

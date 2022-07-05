@@ -31,7 +31,7 @@ export default {
     },
     props: {
         inputWysiwyg: String,
-
+        required: false
     },
     methods: {
 

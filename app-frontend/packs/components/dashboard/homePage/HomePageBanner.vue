@@ -47,7 +47,7 @@
 <script>
 
 import Button from "../../baseComponents/Button";
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
     name: "HomePageBanner",
@@ -62,12 +62,12 @@ export default {
     },
     methods: {
         onDelete(id) {
-            this.$emit('onDeleteBanner')
-            this.$store.commit('banners/setIdBannerDelete', id)
+            this.$store.commit('banners/setIdBannerDelete', id);
+            this.$emit('onDeleteBanner');
         },
         onChange(id) {
-            this.$store.commit('banners/setIdBannerChange', id)
-            this.fetchBanner()
+            this.$store.commit('banners/setIdBannerChange', id);
+            this.fetchBanner();
         },
         ...mapActions({
             fetchBanner: "banners/fetchBanner",
@@ -82,7 +82,7 @@ export default {
     .tt-home-page-banner {
         height: 180px;
         width: 420px;
-        margin: 10px;
+        margin: 20px;
         padding: 30px;
         position: relative;
         display: flex;

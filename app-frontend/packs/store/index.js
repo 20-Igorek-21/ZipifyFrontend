@@ -1,5 +1,5 @@
-import { createStore } from 'vuex';
-import { bannersModule } from './bannersModule';
+import {createStore} from 'vuex';
+import {bannersModule} from './bannersModule';
 
 export default createStore({
     modules: {
