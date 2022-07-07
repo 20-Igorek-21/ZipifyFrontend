@@ -29,12 +29,7 @@ export default {
             ]
         }
     },
-    props: {
-        inputWysiwyg: String,
-        required: false
-    },
     methods: {
-
         setInput() {
             const value = this.inputWysiwyg;
             const delta = this.quill.clipboard.convert(value);
@@ -60,9 +55,6 @@ export default {
     mounted() {
         this.editorWysiwyg();
     },
-    beforeUnmount() {
-
-    }
 }
 
 </script>

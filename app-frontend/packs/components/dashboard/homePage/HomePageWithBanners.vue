@@ -4,7 +4,7 @@
 
         <HomePageBanner
             v-for="banner of dataBanners"
-            :key="banner"
+            :key="banner.id"
             :banner="banner"
             @onDeleteBanner="onDeleteBanner"
         />

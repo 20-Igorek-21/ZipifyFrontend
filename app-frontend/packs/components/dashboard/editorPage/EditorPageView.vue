@@ -1,6 +1,9 @@
 <template>
 
-    <div class="tt-editor-page">
+    <div
+        class="tt-editor-page"
+        v-if="isLoader"
+    >
 
         <EditorPageEditForm/>
 
@@ -15,16 +18,29 @@
 
     </div>
 
+    <LoaderPage v-else/>
+
 </template>
 
 <script>
 
 import EditorPageEditForm from "./EditorPageEditForm";
 import EditorPagePreviewBanner from "./EditorPagePreviewBanner";
+import {mapState} from "vuex";
+import LoaderPage from "../../baseComponents/LoaderPage";
 
 export default {
     name: "EditorPageView",
-    components: {EditorPagePreviewBanner, EditorPageEditForm},
+    components: {
+        EditorPagePreviewBanner,
+        EditorPageEditForm,
+        LoaderPage
+    },
+    computed: {
+        ...mapState ({
+            isLoader: state => state.banners.isLoader,
+        })
+    },
 }
 
 </script>

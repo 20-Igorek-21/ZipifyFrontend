@@ -18,7 +18,7 @@
             <Input
                 class="tt-editor-form__text-input"
                 :modelValue="inputText"
-                @update:model-value="setInputText"
+                @update:model-value="inputTextWrite"
                 :type="'text'"
                 placeholder="New banner"
             />
@@ -38,9 +38,8 @@
         <div class="tt-editor-form__box-input">
             <Wysiwyg
                 class="tt-editor-form__wysiwyg"
-                :inputWysiwyg="inputWysiwyg"
-                @update:modelValueWysiwygLength="setInputLengthWysiwyg"
-                @update:model-value-wysiwyg="setInputWysiwyg"
+                @update:modelValueWysiwygLength="inputLengthWysiwygWrite"
+                @update:model-value-wysiwyg="inputWysiwygWrite"
             />
             <p
                 class="tt-text tt-editor-form__message"
@@ -57,13 +56,16 @@
         <Input
             class="tt-editor-form__color-input"
             :modelValue="inputColor"
-            @update:model-value="setInputColor"
+            @update:model-value="inputColorWrite"
             :type="'color'"
         />
 
-        <h3 class="tt-text tt-editor-form__title">
-            Banner background color
-        </h3>
+        <Button
+            class="tt-button tt-page__button"
+            @click="resourcePicker"
+            :type="'button'">
+            Target Product
+        </Button>
 
         <Button
             class="tt-button tt-page__button tt-page__button--third"
@@ -78,7 +80,7 @@
 
 <script>
 
-import {mapMutations, mapState, mapActions} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 import Input from "../../baseComponents/Input";
 import Button from "../../baseComponents/Button";
 import Wysiwyg from "../../baseComponents/Wysiwyg";
@@ -108,22 +110,26 @@ export default {
                 options: {
                     selectMultiple: true,
                     showHidden: false,
+                    showVariants: false
                 },
             });
             productPicker.dispatch(ResourcePicker.Action.OPEN)
+            productPicker.subscribe(ResourcePicker.Action.SELECT, ({selection}) => {
+                this.idProductWrite(selection[0].id.slice(22))
+            })
+
         },
-        ...mapMutations({
-            setInputText: 'banners/setInputText',
-            setInputColor: 'banners/setInputColor',
-            setInputWysiwyg: "banners/setInputWysiwyg",
-            setInputLengthWysiwyg: "banners/setInputLengthWysiwyg",
-        }),
         ...mapActions({
             createBanner: 'banners/createBanner',
             changeBanner: 'banners/changeBanner',
+            clearFields: 'banners/clearFields',
+            idProductWrite: 'banners/idProductWrite',
+            inputTextWrite: 'banners/inputTextWrite',
+            inputColorWrite: 'banners/inputColorWrite',
+            inputWysiwygWrite: 'banners/inputWysiwygWrite',
+            inputLengthWysiwygWrite: 'banners/inputLengthWysiwygWrite'
         }),
         formSubmit() {
-            this.$store.commit('banners/setLoader', true);
             this.v$.inputText.$dirty = true;
             if (!this.v$.inputText.$invalid && (this.inputLengthWysiwyg >= MIN_LENGTH_WYSIWYG) && (this.inputLengthWysiwyg < MAX_LENGTH_WYSIWYG)) {
                 if (this.idBannerChange) {
@@ -141,21 +147,10 @@ export default {
             inputWysiwyg: state => state.banners.inputWysiwyg,
             inputLengthWysiwyg: state => state.banners.inputLengthWysiwyg,
             idBannerChange: state => state.banners.idBannerChange,
-            dataBanner: state => state.banners.dataBanner
         })
     },
-    mounted() {
-        this.$store.commit('banners/setInputColor', '#FFFFFF');
-        if (this.idBannerChange) {
-            this.$store.commit('banners/setInputText', this.dataBanner.title);
-            this.$store.commit('banners/setInputColor', this.dataBanner.style.color);
-            this.$store.commit('banners/setInputWysiwyg', this.dataBanner.content);
-        }
-    },
     beforeUnmount() {
-        this.$store.commit('banners/setIdBannerChange', null);
-        this.$store.commit('banners/setInputText', '');
-        this.$store.commit('banners/setInputWysiwyg', '');
+        this.clearFields()
     }
 }
 </script>

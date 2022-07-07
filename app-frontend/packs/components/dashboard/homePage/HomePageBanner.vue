@@ -62,15 +62,15 @@ export default {
     },
     methods: {
         onDelete(id) {
-            this.$store.commit('banners/setIdBannerDelete', id);
+            this.idBannerDelete(id)
             this.$emit('onDeleteBanner');
         },
         onChange(id) {
-            this.$store.commit('banners/setIdBannerChange', id);
-            this.fetchBanner();
+            this.fetchBanner(id);
         },
         ...mapActions({
             fetchBanner: "banners/fetchBanner",
+            idBannerDelete: "banners/idBannerDelete",
         })
     },
 }

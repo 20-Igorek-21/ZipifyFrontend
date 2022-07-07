@@ -33,7 +33,9 @@ import {mapActions} from "vuex";
 
 export default {
     name: "HomePagePopup",
-    components: { Button },
+    components: {
+        Button
+    },
     methods: {
         onDeleteCard() {
             this.deleteBanner();

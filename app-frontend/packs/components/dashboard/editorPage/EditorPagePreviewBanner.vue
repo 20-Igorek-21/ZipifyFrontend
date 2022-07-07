@@ -4,7 +4,7 @@
         class="tt-preview"
         :style="{ backgroundColor: inputColor }"
     >
-        <p v-html="this.innerWysiwyg"></p>
+        <p v-html="this.innerWysiwyg"/>
 
     </section>
 
