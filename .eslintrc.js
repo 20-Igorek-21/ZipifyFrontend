@@ -8,6 +8,7 @@ module.exports = {
         'plugin:vue/vue3-recommended',
     ],
     rules: {
-
+        'no-console': 'off',
+        'no-alert': 'off',
     }
 }

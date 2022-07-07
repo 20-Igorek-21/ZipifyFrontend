@@ -59,7 +59,7 @@ export default {
     },
     computed: {
         ...mapState({
-            dataBanners: state => state.banners.dataBanners
+            dataBanners: state => state.dataBanners
         })
     },
 }

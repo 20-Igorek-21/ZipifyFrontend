@@ -1,24 +1,24 @@
 <template>
 
     <div
-        class="tt-wysiwyg"
-        @click="updateInputWysiwyg"
+        class='tt-wysiwyg'
+        @click='updateInputWysiwyg'
     >
         <div
-            id="editor-container"
-            @keyup="updateInputWysiwyg"
+            id='editor-container'
+            @keyup='updateInputWysiwyg'
         />
     </div>
-
 
 </template>
 
 <script>
 
-import {MAX_LENGTH_WYSIWYG} from "../../constants";
+import {MAX_LENGTH_WYSIWYG} from '../../constants';
+import {mapState} from 'vuex';
 
 export default {
-    name: "Wysiwyg",
+    name: 'Wysiwyg',
     data() {
         return {
             quill: Object,
@@ -52,8 +52,17 @@ export default {
         },
 
     },
+    computed: {
+        ...mapState({
+            idBanner: state => state.idBanner,
+            inputWysiwyg: state => state.inputWysiwyg,
+        })
+    },
     mounted() {
         this.editorWysiwyg();
+        if (this.idBanner) {
+            this.setInput()
+        }
     },
 }
 

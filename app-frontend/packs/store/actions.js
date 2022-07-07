@@ -1,53 +1,7 @@
 import axios from "axios";
 import router from "../router/router";
 
-export const bannersModule = {
-    state() {
-        return {
-            isLoader: '',
-            isEmpty: true,
-            dataBanners: [],
-            inputText: '',
-            inputColor: '#FFFFFF',
-            inputWysiwyg: '',
-            inputLengthWysiwyg: 0,
-            idBannerDelete: null,
-            idBannerChange: null,
-            idProduct: null
-        }
-    },
-    mutations: {
-        setLoader(state, value) {
-            state.isLoader = value;
-        },
-        setDataBanners(state, data) {
-            state.dataBanners = data;
-        },
-        setIsEmpty(state, value) {
-            state.isEmpty = value;
-        },
-        setInputText(state, value) {
-            state.inputText = value;
-        },
-        setInputColor(state, value) {
-            state.inputColor = value;
-        },
-        setInputWysiwyg(state, value) {
-            state.inputWysiwyg = value;
-        },
-        setInputLengthWysiwyg(state, value) {
-            state.inputLengthWysiwyg = value;
-        },
-        setIdBannerDelete(state, id) {
-            state.idBannerDelete = id;
-        },
-        setIdBannerChange(state, id) {
-            state.idBannerChange = id;
-        },
-        setIdProduct(state, value) {
-            state.idProduct = value;
-        }
-    },
+export const ACTIONS = {
     actions: {
         async fetchBanners({commit}) {
             commit('setLoader', false);
@@ -63,9 +17,9 @@ export const bannersModule = {
                 .finally(() => commit('setLoader', true));
         },
         async fetchBanner({state,commit},id) {
-            commit('setIdBannerChange', id);
+            commit('setIdBanner', id);
             commit('setLoader', false);
-            await axios.get('/api/v1/banners/'+ state.idBannerChange)
+            await axios.get('/api/v1/banners/'+ state.idBanner)
                 .then((res) => {
                     commit('setInputText', res.data.data.title);
                     commit('setInputColor', res.data.data.style.color);
@@ -92,14 +46,15 @@ export const bannersModule = {
         },
         async deleteBanner({state, commit, dispatch}) {
             commit('setLoader', false);
-            await axios.delete('/api/v1/banners/' + state.idBannerDelete)
+            await axios.delete('/api/v1/banners/' + state.idBanner)
                 .then(() => {
                     dispatch('fetchBanners');
                 })
                 .finally(() => commit('setLoader', true));
         },
-        async changeBanner({state}) {
-            await axios.put('/api/v1/banners/' + state.idBannerChange, {
+        async changeBanner({state, commit}) {
+            commit('setLoader', false);
+            await axios.put('/api/v1/banners/' + state.idBanner, {
                 banner: {
                     title: state.inputText,
                     style: {
@@ -109,17 +64,18 @@ export const bannersModule = {
                     product_id: state.idProduct
                 }
             })
-                .then(() => router.push('/'));
+                .then(() => router.push('/'))
+                .finally(() => commit('setLoader', true));
         },
         clearFields({commit}) {
-            commit('setIdBannerChange', null);
+            commit('setIdBanner', null);
             commit('setInputText', '');
             commit('setInputWysiwyg', '');
             commit('setInputColor', '#FFFFFF');
             commit('setIdProduct', null);
         },
-        idBannerDelete({commit}, id) {
-            commit('setIdBannerDelete', id);
+        idBannerWrite({commit}, id) {
+            commit('setIdBanner', id);
         },
         idProductWrite({commit}, id) {
             commit('setIdProduct', id);
@@ -136,7 +92,5 @@ export const bannersModule = {
         inputTextWrite({commit}, value) {
             commit('setInputText', value);
         },
-
-    },
-    namespaced: true
+    }
 }

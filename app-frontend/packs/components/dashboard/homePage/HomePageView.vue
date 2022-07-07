@@ -38,13 +38,13 @@ export default {
             router.push('/editor');
         },
         ...mapActions({
-            fetchBanners: 'banners/fetchBanners',
+            fetchBanners: 'fetchBanners',
         })
     },
     computed: {
         ...mapState ({
-            isLoader: state => state.banners.isLoader,
-            isEmpty: state => state.banners.isEmpty
+            isLoader: state => state.isLoader,
+            isEmpty: state => state.isEmpty
         })
     },
     mounted() {

@@ -42,7 +42,7 @@ export default {
             this.$emit('onClosePopup');
         },
         ...mapActions({
-            deleteBanner: "banners/deleteBanner",
+            deleteBanner: "deleteBanner",
         })
     },
 }

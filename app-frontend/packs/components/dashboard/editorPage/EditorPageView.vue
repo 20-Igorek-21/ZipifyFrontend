@@ -38,7 +38,7 @@ export default {
     },
     computed: {
         ...mapState ({
-            isLoader: state => state.banners.isLoader,
+            isLoader: state => state.isLoader,
         })
     },
 }

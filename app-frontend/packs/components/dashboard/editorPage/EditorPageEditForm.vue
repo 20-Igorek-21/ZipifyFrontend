@@ -115,42 +115,44 @@ export default {
             });
             productPicker.dispatch(ResourcePicker.Action.OPEN)
             productPicker.subscribe(ResourcePicker.Action.SELECT, ({selection}) => {
-                this.idProductWrite(selection[0].id.slice(22))
+                this.idProductWrite(selection[0].id.slice(22));
             })
 
         },
         ...mapActions({
-            createBanner: 'banners/createBanner',
-            changeBanner: 'banners/changeBanner',
-            clearFields: 'banners/clearFields',
-            idProductWrite: 'banners/idProductWrite',
-            inputTextWrite: 'banners/inputTextWrite',
-            inputColorWrite: 'banners/inputColorWrite',
-            inputWysiwygWrite: 'banners/inputWysiwygWrite',
-            inputLengthWysiwygWrite: 'banners/inputLengthWysiwygWrite'
+            createBanner: 'createBanner',
+            changeBanner: 'changeBanner',
+            clearFields: 'clearFields',
+            idProductWrite: 'idProductWrite',
+            inputTextWrite: 'inputTextWrite',
+            inputColorWrite: 'inputColorWrite',
+            inputWysiwygWrite: 'inputWysiwygWrite',
+            inputLengthWysiwygWrite: 'inputLengthWysiwygWrite'
         }),
         formSubmit() {
             this.v$.inputText.$dirty = true;
-            if (!this.v$.inputText.$invalid && (this.inputLengthWysiwyg >= MIN_LENGTH_WYSIWYG) && (this.inputLengthWysiwyg < MAX_LENGTH_WYSIWYG)) {
-                if (this.idBannerChange) {
+            if (!this.isInputInvalid) return;
+            if (this.idBanner) {
                     this.changeBanner();
                 } else {
                     this.createBanner();
                 }
-            }
         },
     },
     computed: {
         ...mapState({
-            inputText: state => state.banners.inputText,
-            inputColor: state => state.banners.inputColor,
-            inputWysiwyg: state => state.banners.inputWysiwyg,
-            inputLengthWysiwyg: state => state.banners.inputLengthWysiwyg,
-            idBannerChange: state => state.banners.idBannerChange,
-        })
+            inputText: state => state.inputText,
+            inputColor: state => state.inputColor,
+            inputWysiwyg: state => state.inputWysiwyg,
+            inputLengthWysiwyg: state => state.inputLengthWysiwyg,
+            idBanner: state => state.idBanner,
+        }),
+        isInputInvalid() {
+             return !this.v$.inputText.$invalid && (this.inputLengthWysiwyg >= MIN_LENGTH_WYSIWYG) && (this.inputLengthWysiwyg < MAX_LENGTH_WYSIWYG);
+        }
     },
     beforeUnmount() {
-        this.clearFields()
+        this.clearFields();
     }
 }
 </script>

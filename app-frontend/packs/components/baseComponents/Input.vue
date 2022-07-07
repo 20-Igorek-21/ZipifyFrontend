@@ -10,19 +10,22 @@
 </template>
 
 <script>
+
 export default {
     name: "Input",
     props: {
         modelValue: [String, Number],
         type: String,
-        required: false
+        required: false,
+        default: false
     },
     methods: {
         updateInput(event) {
-            this.$emit('update:modelValue', event.target.value)
+            this.$emit('update:modelValue', event.target.value);
         }
     }
 }
+
 </script>
 
 <style scoped>

@@ -18,8 +18,8 @@ export default {
     name: "EditorPagePreviewBanner",
     computed: {
         ...mapState({
-            inputColor: state => state.banners.inputColor,
-            innerWysiwyg: state => state.banners.inputWysiwyg
+            inputColor: state => state.inputColor,
+            innerWysiwyg: state => state.inputWysiwyg
         })
     },
 }
