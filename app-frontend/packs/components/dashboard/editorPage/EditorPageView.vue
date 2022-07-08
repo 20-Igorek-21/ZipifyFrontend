@@ -1,9 +1,6 @@
 <template>
 
-    <div
-        class="tt-editor-page"
-        v-if="isLoader"
-    >
+    <div class="tt-editor-page">
 
         <EditorPageEditForm/>
 
@@ -17,8 +14,6 @@
         </router-link>
 
     </div>
-
-    <LoaderPage v-else/>
 
 </template>
 
@@ -37,7 +32,7 @@ export default {
         LoaderPage
     },
     computed: {
-        ...mapState ({
+        ...mapState({
             isLoader: state => state.isLoader,
         })
     },
@@ -47,46 +42,46 @@ export default {
 
 <style>
 
-    .tt-editor-page {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-    }
+.tt-editor-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tt-editor-page__link {
+    height: 40px;
+    width: 108px;
+    position: absolute;
+    bottom: 50px;
+    right: 210px;
+    border-radius: 4px;
+    background-color: var(--color-white);
+    color: var(--color-red);
+    border: 2px solid var(--color-red);
+}
+
+.tt-editor-page__link:hover {
+    background-color: var(--color-red);
+    color: var(--color-white);
+}
+
+@media (max-width: 750px) {
 
     .tt-editor-page__link {
-        height: 40px;
-        width: 108px;
-        position: absolute;
-        bottom: 50px;
-        right: 210px;
-        border-radius: 4px;
-        background-color: var(--color-white);
-        color: var(--color-red);
-        border: 2px solid var(--color-red);
+        top: 15px;
+        right: 130px;
+        background-color: var(--color-red);
+        color: var(--color-white);
+        border: 2px solid var(--color-white);
     }
 
     .tt-editor-page__link:hover {
-        background-color: var(--color-red);
-        color: var(--color-white);
+        background-color: var(--color-white);
+        color: var(--color-red);
     }
-
-    @media (max-width: 750px) {
-
-        .tt-editor-page__link {
-            top: 15px;
-            right: 130px;
-            background-color: var(--color-red);
-            color: var(--color-white);
-            border: 2px solid var(--color-white);
-        }
-
-        .tt-editor-page__link:hover {
-            background-color: var(--color-white);
-            color: var(--color-red);
-        }
-    }
+}
 
 </style>

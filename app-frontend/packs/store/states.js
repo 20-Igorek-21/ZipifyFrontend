@@ -9,7 +9,9 @@ export const STATES = {
             inputWysiwyg: '',
             inputLengthWysiwyg: 0,
             idBanner: null,
-            idProduct: null
+            idProduct: null,
+            titleProduct: '',
+            imgProduct: ''
         }
     }
 }

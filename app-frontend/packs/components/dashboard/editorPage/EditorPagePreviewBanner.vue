@@ -35,7 +35,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid var(--color-red);
+        border: 1px solid var(--color-grey);
         border-radius: 8px;
     }
 

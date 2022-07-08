@@ -109,6 +109,7 @@ export default {
         height: 23px;
         width: 147px;
         padding: 3px;
+        border: 1px solid var(--color-grey);
         border-radius: 4px;
         font-size: 16px;
     }

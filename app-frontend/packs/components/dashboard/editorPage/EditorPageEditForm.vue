@@ -29,6 +29,7 @@
             </p>
         </div>
 
+        <span class="tt-editor-form__line"/>
 
         <h3 class="tt-text tt-editor-form__title">
             Header text
@@ -48,6 +49,8 @@
             </p>
         </div>
 
+        <span class="tt-editor-form__line"/>
+
         <h3 class="tt-text tt-editor-form__title">
             Banner background color
         </h3>
@@ -59,18 +62,44 @@
             type="color"
         />
 
-        <Button
-            class="tt-button tt-page__button"
-            @click="resourcePicker"
-            type="button">
-            Target Product
-        </Button>
+        <span class="tt-editor-form__line"/>
+
+        <div class="tt-editor-form__wrapper-product">
+            <div
+                class="tt-editor-form__content-product"
+                v-if="titleProduct"
+            >
+                <h4 class="tt-editor-form__title-product">
+                    Product:
+                </h4>
+                <p class="tt-editor-form__text-product">
+                    {{titleProduct}}
+                </p>
+                <img
+                    class="tt-editor-form__img-product"
+                    :src="imgProduct"
+                    alt="Product-photo"
+                >
+            </div>
+        </div>
 
         <Button
             class="tt-button tt-page__button tt-page__button--third"
             type="submit"
         >
             Save
+        </Button>
+
+        <Button
+            class="tt-button tt-page__button"
+            @click="resourcePicker"
+            type="button">
+            <p v-if="titleProduct">
+                Change product
+            </p>
+            <p v-else>
+                Add product
+            </p>
         </Button>
 
     </form>
@@ -86,8 +115,9 @@ import Wysiwyg from "../../baseComponents/Wysiwyg";
 import useVuelidate from "@vuelidate/core";
 import {maxLength, required} from "@vuelidate/validators";
 import {MAX_LENGTH_TITLE, MAX_LENGTH_WYSIWYG, MIN_LENGTH_WYSIWYG} from "../../../constants";
-import {ResourcePicker} from "@shopify/app-bridge/actions";
+import {ResourcePicker, Toast} from "@shopify/app-bridge/actions";
 import app from "../../../shared/shopifyApp";
+
 
 export default {
     name: "EditorPageEditForm",
@@ -114,27 +144,28 @@ export default {
             });
             productPicker.dispatch(ResourcePicker.Action.OPEN)
             productPicker.subscribe(ResourcePicker.Action.SELECT, ({selection}) => {
-                this.idProductWrite(selection[0].id.slice(22));
+                this.productWrite(selection[0]);
             })
-
         },
         ...mapActions({
             createBanner: 'createBanner',
             changeBanner: 'changeBanner',
             clearFields: 'clearFields',
-            idProductWrite: 'idProductWrite',
+            productWrite: 'productWrite',
             inputTextWrite: 'inputTextWrite',
             inputColorWrite: 'inputColorWrite',
             inputWysiwygWrite: 'inputWysiwygWrite',
-            inputLengthWysiwygWrite: 'inputLengthWysiwygWrite'
+            inputLengthWysiwygWrite: 'inputLengthWysiwygWrite',
         }),
         formSubmit() {
             this.v$.inputText.$dirty = true;
             if (!this.isInputInvalid) return;
             if (this.idBanner) {
                     this.changeBanner();
+                    this.v$.inputText.$dirty = false;
                 } else {
                     this.createBanner();
+                    this.v$.inputText.$dirty = false;
                 }
         },
     },
@@ -145,6 +176,8 @@ export default {
             inputWysiwyg: state => state.inputWysiwyg,
             inputLengthWysiwyg: state => state.inputLengthWysiwyg,
             idBanner: state => state.idBanner,
+            titleProduct: state => state.titleProduct,
+            imgProduct: state => state.imgProduct
         }),
         isInputInvalid() {
              return !this.v$.inputText.$invalid && (this.inputLengthWysiwyg >= MIN_LENGTH_WYSIWYG) && (this.inputLengthWysiwyg < MAX_LENGTH_WYSIWYG);
@@ -204,8 +237,6 @@ export default {
         align-items: center;
         justify-content: center;
         font-size: inherit;
-        border: 1px solid var(--color-grey);
-        border-radius: 20px;
     }
 
     .tt-page__button--third {
@@ -224,6 +255,43 @@ export default {
         position: absolute;
         color: var(--color-red);
         font-size: 12px;
+    }
+
+    .tt-editor-form__line {
+        margin-top: 5px;
+        width: 100%;
+        border-bottom: 1px solid var(--color-grey);
+    }
+
+    .tt-editor-form__wrapper-product {
+        height: 35px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .tt-editor-form__content-product {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .tt-editor-form__title-product {
+        font-size: inherit;
+        margin-right: 10px;
+    }
+
+    .tt-editor-form__text-product {
+        width: 80px;
+        margin-right: 40px;
+        font-size: inherit;
+    }
+
+    .tt-editor-form__img-product {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
     }
 
     .tt-editor-form__color-input:hover {

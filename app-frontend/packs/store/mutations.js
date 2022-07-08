@@ -26,6 +26,12 @@ export const MUTATIONS = {
         },
         setIdBanner(state, value) {
             state.idBanner = value;
+        },
+        setTitleProduct(state, value) {
+            state.titleProduct = value;
+        },
+        setImgProduct(state, value) {
+            state.imgProduct = value;
         }
     }
 }
