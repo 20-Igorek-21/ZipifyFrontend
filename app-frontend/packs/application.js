@@ -1,13 +1,16 @@
-import '../styles/application.css';
 import App from './App';
 import { createApp } from 'vue';
-import router from './shared/router';
-import component from '/app-frontend/packs/components/core/layout';
+import axios from "axios";
+import VueAxios from "vue-axios";
+import router from './router/router';
+import store from './store'
+import '../styles/application.css';
+import useVuelidate from "@vuelidate/core";
 
 const app = createApp(App);
 
-component.forEach(component => {
-    app.component(component.name, component);
-})
+app.use(useVuelidate);
+app.use(store);
 app.use(router);
+app.use(VueAxios, axios);
 app.mount(document.querySelector('[data-app]'));

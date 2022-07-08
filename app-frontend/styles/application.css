@@ -4,35 +4,53 @@
   box-sizing: border-box;
 }
 
-.app {
+.tt-app {
   height: 100%;
 }
 
 html,body {
   height: 100%;
   width: 100%;
-  min-width: 320px;
+  min-width: 485px;
   margin: 0;
   font-family: "Roboto", sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 20px;
   background-color: #F1F1F1;
   scroll-behavior: smooth;
 }
 
-.link {
+.tt-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
-  color: inherit;
   cursor: pointer;
 }
 
-.button {
-  font-size: 18px;
+.tt-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
+  font-size: 18px;
   cursor: pointer;
   overflow: hidden;
 }
 
-.link:hover {
-  opacity: .8;
+.tt-text {
+  margin: 0;
+}
+
+.tt-page__button {
+  height: 40px;
+  border-radius: 4px;
+  background-color: var(--color-white);
+  color: var(--color-red);
+  border: 2px solid var(--color-red);
+}
+
+.tt-page__button:hover {
+  background-color: var(--color-red);
+  color: var(--color-white);
 }
