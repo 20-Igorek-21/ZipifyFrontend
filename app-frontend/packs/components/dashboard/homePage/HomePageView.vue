@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="isLoader">
+    <div  v-if="!isLoader">
 
         <HomePageEmptyState
             @create="createBanner"
@@ -14,7 +14,7 @@
 
     </div>
 
-    <LoaderPage v-else/>
+    <LoaderPage class="tt-loader" v-else/>
 
 </template>
 

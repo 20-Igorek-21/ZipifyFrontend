@@ -6,7 +6,7 @@ import app from "../shared/shopifyApp";
 export const ACTIONS = {
     actions: {
         async fetchBanners({commit, dispatch}) {
-            commit('setLoader', false);
+            commit('setLoader', true);
             await axios.get('/api/v1/banners')
                 .then((res) => {
                     if (res.data.data.length) {
@@ -17,11 +17,11 @@ export const ACTIONS = {
                     commit('setDataBanners', res.data.data);
                     dispatch('clearFields');
                 })
-                .finally(() => commit('setLoader', true));
+                .finally(() => commit('setLoader', false));
         },
         async fetchBanner({state,commit},id) {
             commit('setIdBanner', id);
-            commit('setLoader', false);
+            commit('setLoader', true);
             await axios.get('/api/v1/banners/'+ state.idBanner)
                 .then((res) => {
                     commit('setInputText', res.data.data.title);
@@ -32,10 +32,10 @@ export const ACTIONS = {
                     commit('setImgProduct', res.data.data.style.imgProduct);
                     router.push('editor');
                 })
-                .finally(() => commit('setLoader', true));
+                .finally(() => commit('setLoader', false));
         },
         async createBanner({state,commit, dispatch}) {
-            commit('setLoader', false);
+            commit('setLoader', true);
             await axios.post('/api/v1/banners', {
                 banner: {
                     title: state.inputText,
@@ -48,10 +48,10 @@ export const ACTIONS = {
                     product_id: state.idProduct
                 }
             })
-                .then((res) => {
+                .then(() => {
                     dispatch('fetchBanners');
-                    dispatch('clearFields');
                     dispatch('toastMessage', 'The banner has been created');
+                    router.push('/')
                 })
                 .catch((res) => {
                     if (res.response.data.error.product_id) {
@@ -61,18 +61,18 @@ export const ACTIONS = {
                         dispatch('toastMessage', res.response.data.error.title[0]);
                     }
                 })
-                .finally(() => commit('setLoader', true));
+                .finally(() => commit('setLoader', false));
         },
         async deleteBanner({state, commit, dispatch}) {
-            commit('setLoader', false);
+            commit('setLoader', true);
             await axios.delete('/api/v1/banners/' + state.idBanner)
                 .then(() => {
                     dispatch('fetchBanners');
                 })
-                .finally(() => commit('setLoader', true));
+                .finally(() => commit('setLoader', false));
         },
         async changeBanner({state, commit, dispatch}) {
-            commit('setLoader', false);
+            commit('setLoader', true);
             await axios.put('/api/v1/banners/' + state.idBanner, {
                 banner: {
                     title: state.inputText,
@@ -86,13 +86,13 @@ export const ACTIONS = {
                 }
             })
                 .then(() => {
-                    dispatch('fetchBanners')
+                    router.push('/')
                     dispatch('toastMessage', 'The banner has been changed');
                 })
-                .catch((res) => {
+                .catch(() => {
                     dispatch('toastMessage', 'The banner is already in use');
                 })
-                .finally(() => commit('setLoader', true));
+                .finally(() => commit('setLoader', false));
         },
         clearFields({commit}) {
             commit('setIdBanner', null);
