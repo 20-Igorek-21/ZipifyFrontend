@@ -18,7 +18,7 @@
 
         <Button
             class="tt-home-page-banner__button tt-home-page-banner__button--first"
-            :type="'button'"
+            type="button"
             @onClick="onChange(banner.id)"
         >
             <svg xmlns="http://www.w3.org/2000/svg" height="29px" width="29px" viewBox="0 0 24 24" fill="#4CD91A">
@@ -31,7 +31,7 @@
 
         <Button
             class="tt-home-page-banner__button tt-home-page-banner__button--second"
-            :type="'button'"
+            type="button"
             @onClick="onDelete(banner.id)"
         >
             <svg xmlns="http://www.w3.org/2000/svg" height="29px" width="29px" viewBox="0 0 24 24"  fill="var(--color-red)">

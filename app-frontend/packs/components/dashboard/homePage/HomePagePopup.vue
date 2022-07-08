@@ -6,7 +6,7 @@
 
     <Button
         class="tt-page__button tt-page__button--second"
-        :type="'button'"
+        type="button"
         @onClick="onDeleteCard"
     >
         Yes
@@ -14,7 +14,7 @@
 
     <Button
         class="tt-confirm__button-close"
-        :type="'button'"
+        type="button"
         @onClick="this.$emit('onClosePopup')"
     >
         <svg xmlns="http://www.w3.org/2000/svg" height="29px" width="29px" viewBox="0 0 24 24" fill="#000000">

@@ -14,10 +14,15 @@
 export default {
     name: "Input",
     props: {
-        modelValue: [String, Number],
-        type: String,
-        required: false,
-        default: false
+        modelValue: {
+            type: [String, Number],
+            required: true
+        },
+        type: {
+            type: String,
+            required: false,
+            default: 'text'
+        }
     },
     methods: {
         updateInput(event) {

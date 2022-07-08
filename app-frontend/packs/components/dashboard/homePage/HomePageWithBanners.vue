@@ -11,7 +11,7 @@
 
             <Button
                 class="tt-page__button tt-page__button--first"
-                :type="'button'"
+                type="button"
                 @onClick="this.$emit('create')"
             >
                 Create new banner

@@ -35,7 +35,6 @@ export default {
             const delta = this.quill.clipboard.convert(value);
             this.quill.setContents(delta, 'user');
             this.updateInputWysiwyg();
-
         },
         editorWysiwyg() {
             this.quill = new Quill('#editor-container', {

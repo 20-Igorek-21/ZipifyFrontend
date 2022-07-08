@@ -19,12 +19,11 @@
                 class="tt-editor-form__text-input"
                 :modelValue="inputText"
                 @update:model-value="inputTextWrite"
-                :type="'text'"
                 placeholder="New banner"
             />
             <p
                 class="tt-text tt-editor-form__message"
-                v-if="this.v$.inputText.$dirty && this.v$.inputText.$invalid"
+                v-if="isInputTextInvalid"
             >
                 This field is invalid.
             </p>
@@ -43,7 +42,7 @@
             />
             <p
                 class="tt-text tt-editor-form__message"
-                v-if="this.v$.inputText.$dirty && ((this.inputLengthWysiwyg < 2) || (this.inputLengthWysiwyg >= 20))"
+                v-if="isInputWysiwygInvalid"
             >
                 This field is invalid.
             </p>
@@ -57,19 +56,19 @@
             class="tt-editor-form__color-input"
             :modelValue="inputColor"
             @update:model-value="inputColorWrite"
-            :type="'color'"
+            type="color"
         />
 
         <Button
             class="tt-button tt-page__button"
             @click="resourcePicker"
-            :type="'button'">
+            type="button">
             Target Product
         </Button>
 
         <Button
             class="tt-button tt-page__button tt-page__button--third"
-            :type="'submit'"
+            type="submit"
         >
             Save
         </Button>
@@ -149,6 +148,12 @@ export default {
         }),
         isInputInvalid() {
              return !this.v$.inputText.$invalid && (this.inputLengthWysiwyg >= MIN_LENGTH_WYSIWYG) && (this.inputLengthWysiwyg < MAX_LENGTH_WYSIWYG);
+        },
+        isInputTextInvalid() {
+            return this.v$.inputText.$dirty && this.v$.inputText.$invalid;
+        },
+        isInputWysiwygInvalid() {
+            return this.v$.inputText.$dirty && ((this.inputLengthWysiwyg < 2) || (this.inputLengthWysiwyg >= 20));
         }
     },
     beforeUnmount() {

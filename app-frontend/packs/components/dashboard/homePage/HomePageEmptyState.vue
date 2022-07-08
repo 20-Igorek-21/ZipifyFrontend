@@ -16,7 +16,7 @@
 
         <Button
             class="tt-home-page-empty-banners__button"
-            :type="'button'"
+            type="button"
             @onClick="createBanner"
         >
             Create new banner
