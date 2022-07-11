@@ -14,8 +14,8 @@
 
 <script>
 
-import {MAX_LENGTH_WYSIWYG} from '../../constants';
-import {mapState} from 'vuex';
+import { MAX_LENGTH_WYSIWYG } from '../../constants';
+import { mapState } from 'vuex';
 
 export default {
     name: 'Wysiwyg',
@@ -25,14 +25,15 @@ export default {
             toolbarOptions: [
                 ['bold', 'italic'],
                 [{ 'color': [] }, { 'background': [] }],
-                [{ 'font': [] }],
+                [{ 'font': [] }]
             ]
-        }
+        };
     },
     methods: {
         setInput() {
             const value = this.inputWysiwyg;
             const delta = this.quill.clipboard.convert(value);
+
             this.quill.setContents(delta, 'user');
             this.updateInputWysiwyg();
         },
@@ -48,22 +49,21 @@ export default {
             if (this.quill.getText().length < MAX_LENGTH_WYSIWYG) {
                 this.$emit('update:modelValueWysiwyg', this.quill.root.innerHTML);
             }
-        },
-
+        }
     },
     computed: {
         ...mapState({
             idBanner: state => state.idBanner,
-            inputWysiwyg: state => state.inputWysiwyg,
+            inputWysiwyg: state => state.inputWysiwyg
         })
     },
     mounted() {
         this.editorWysiwyg();
         if (this.idBanner) {
-            this.setInput()
+            this.setInput();
         }
-    },
-}
+    }
+};
 
 </script>
 

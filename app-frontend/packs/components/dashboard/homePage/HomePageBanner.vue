@@ -46,34 +46,34 @@
 
 <script>
 
-import Button from "../../baseComponents/Button";
-import {mapActions} from "vuex";
+import Button from '../../baseComponents/Button';
+import { mapActions } from 'vuex';
 
 export default {
-    name: "HomePageBanner",
+    name: 'HomePageBanner',
     components: {
-        Button,
+        Button
     },
     props: {
         banner: {
             type: Object,
             required: true
-        },
+        }
     },
     methods: {
         onDelete(id) {
-            this.idBannerWrite(id)
+            this.idBannerWrite(id);
             this.$emit('onDeleteBanner');
         },
         onChange(id) {
             this.fetchBanner(id);
         },
         ...mapActions({
-            fetchBanner: "fetchBanner",
-            idBannerWrite: "idBannerWrite",
+            fetchBanner: 'fetchBanner',
+            idBannerWrite: 'idBannerWrite'
         })
-    },
-}
+    }
+};
 
 </script>
 

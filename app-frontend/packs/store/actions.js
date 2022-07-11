@@ -1,11 +1,11 @@
-import axios from "axios";
-import router from "../router/router";
-import {Toast} from "@shopify/app-bridge/actions";
-import app from "../shared/shopifyApp";
+import axios from 'axios';
+import { Toast } from '@shopify/app-bridge/actions';
+import router from '../router/router';
+import app from '../shared/shopifyApp';
 
 export const ACTIONS = {
     actions: {
-        async fetchBanners({commit, dispatch}) {
+        async fetchBanners({ commit, dispatch }) {
             commit('setLoader', true);
             await axios.get('/api/v1/banners')
                 .then((res) => {
@@ -19,10 +19,10 @@ export const ACTIONS = {
                 })
                 .finally(() => commit('setLoader', false));
         },
-        async fetchBanner({state,commit},id) {
+        async fetchBanner({ state, commit }, id) {
             commit('setIdBanner', id);
             commit('setLoader', true);
-            await axios.get('/api/v1/banners/'+ state.idBanner)
+            await axios.get(`/api/v1/banners/${state.idBanner}`)
                 .then((res) => {
                     commit('setInputText', res.data.data.title);
                     commit('setInputColor', res.data.data.style.color);
@@ -34,7 +34,7 @@ export const ACTIONS = {
                 })
                 .finally(() => commit('setLoader', false));
         },
-        async createBanner({state,commit, dispatch}) {
+        async createBanner({ state, commit, dispatch }) {
             commit('setLoader', true);
             await axios.post('/api/v1/banners', {
                 banner: {
@@ -51,7 +51,7 @@ export const ACTIONS = {
                 .then(() => {
                     dispatch('fetchBanners');
                     dispatch('toastMessage', 'The banner has been created');
-                    router.push('/')
+                    router.push('/');
                 })
                 .catch((res) => {
                     if (res.response.data.error.product_id) {
@@ -63,17 +63,17 @@ export const ACTIONS = {
                 })
                 .finally(() => commit('setLoader', false));
         },
-        async deleteBanner({state, commit, dispatch}) {
+        async deleteBanner({ state, commit, dispatch }) {
             commit('setLoader', true);
-            await axios.delete('/api/v1/banners/' + state.idBanner)
+            await axios.delete(`/api/v1/banners/${state.idBanner}`)
                 .then(() => {
                     dispatch('fetchBanners');
                 })
                 .finally(() => commit('setLoader', false));
         },
-        async changeBanner({state, commit, dispatch}) {
+        async changeBanner({ state, commit, dispatch }) {
             commit('setLoader', true);
-            await axios.put('/api/v1/banners/' + state.idBanner, {
+            await axios.put(`/api/v1/banners/${state.idBanner}`, {
                 banner: {
                     title: state.inputText,
                     style: {
@@ -86,7 +86,7 @@ export const ACTIONS = {
                 }
             })
                 .then(() => {
-                    router.push('/')
+                    router.push('/');
                     dispatch('toastMessage', 'The banner has been changed');
                 })
                 .catch(() => {
@@ -94,7 +94,7 @@ export const ACTIONS = {
                 })
                 .finally(() => commit('setLoader', false));
         },
-        clearFields({commit}) {
+        clearFields({ commit }) {
             commit('setIdBanner', null);
             commit('setInputText', '');
             commit('setInputWysiwyg', '');
@@ -103,32 +103,33 @@ export const ACTIONS = {
             commit('setTitleProduct', '');
             commit('setImgProduct', '');
         },
-        idBannerWrite({commit}, id) {
+        idBannerWrite({ commit }, id) {
             commit('setIdBanner', id);
         },
-        productWrite({commit}, value) {
+        productWrite({ commit }, value) {
             commit('setIdProduct', value.id.slice(22));
             commit('setTitleProduct', value.title);
             commit('setImgProduct', value.images[0].originalSrc);
         },
-        inputLengthWysiwygWrite({commit}, value) {
+        inputLengthWysiwygWrite({ commit }, value) {
             commit('setInputLengthWysiwyg', value);
         },
-        inputWysiwygWrite({commit}, value) {
+        inputWysiwygWrite({ commit }, value) {
             commit('setInputWysiwyg', value);
         },
-        inputColorWrite({commit}, value) {
+        inputColorWrite({ commit }, value) {
             commit('setInputColor', value);
         },
-        inputTextWrite({commit}, value) {
+        inputTextWrite({ commit }, value) {
             commit('setInputText', value);
         },
         toastMessage(state, text) {
-            const toastNotice = Toast.create(app, {message: text});
-            toastNotice.dispatch(Toast.Action.SHOW)
+            const toastNotice = Toast.create(app, { message: text });
+
+            toastNotice.dispatch(Toast.Action.SHOW);
             setTimeout(() => {
                 toastNotice.dispatch(Toast.Action.CLEAR);
-            },2500)
-        },
+            }, 2500);
+        }
     }
-}
+};

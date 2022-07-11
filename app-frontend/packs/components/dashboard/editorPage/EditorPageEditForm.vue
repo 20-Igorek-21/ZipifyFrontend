@@ -108,29 +108,29 @@
 
 <script>
 
-import {mapState, mapActions} from 'vuex';
-import Input from "../../baseComponents/Input";
-import Button from "../../baseComponents/Button";
-import Wysiwyg from "../../baseComponents/Wysiwyg";
-import useVuelidate from "@vuelidate/core";
-import {maxLength, required} from "@vuelidate/validators";
-import {MAX_LENGTH_TITLE, MAX_LENGTH_WYSIWYG, MIN_LENGTH_WYSIWYG} from "../../../constants";
-import {ResourcePicker, Toast} from "@shopify/app-bridge/actions";
-import app from "../../../shared/shopifyApp";
+import { mapState, mapActions } from 'vuex';
+import Input from '../../baseComponents/Input';
+import Button from '../../baseComponents/Button';
+import Wysiwyg from '../../baseComponents/Wysiwyg';
+import useVuelidate from '@vuelidate/core';
+import { maxLength, required } from '@vuelidate/validators';
+import { MAX_LENGTH_TITLE, MAX_LENGTH_WYSIWYG, MIN_LENGTH_WYSIWYG } from '../../../constants';
+import { ResourcePicker } from '@shopify/app-bridge/actions';
+import app from '../../../shared/shopifyApp';
 
 
 export default {
-    name: "EditorPageEditForm",
+    name: 'EditorPageEditForm',
     components: {
         Wysiwyg,
         Button,
         Input
     },
-    setup: () => ({v$: useVuelidate()}),
+    setup: () => ({ v$: useVuelidate() }),
     validations() {
         return {
-            inputText: {required, maxlength: maxLength(MAX_LENGTH_TITLE)},
-        }
+            inputText: { required, maxlength: maxLength(MAX_LENGTH_TITLE) }
+        };
     },
     methods: {
         resourcePicker() {
@@ -140,12 +140,13 @@ export default {
                     selectMultiple: true,
                     showHidden: false,
                     showVariants: false
-                },
+                }
             });
-            productPicker.dispatch(ResourcePicker.Action.OPEN)
-            productPicker.subscribe(ResourcePicker.Action.SELECT, ({selection}) => {
+
+            productPicker.dispatch(ResourcePicker.Action.OPEN);
+            productPicker.subscribe(ResourcePicker.Action.SELECT, ({ selection }) => {
                 this.productWrite(selection[0]);
-            })
+            });
         },
         ...mapActions({
             createBanner: 'createBanner',
@@ -167,7 +168,7 @@ export default {
                     this.createBanner();
                     this.v$.inputText.$dirty = false;
                 }
-        },
+        }
     },
     computed: {
         ...mapState({
@@ -192,7 +193,7 @@ export default {
     beforeUnmount() {
         this.clearFields();
     }
-}
+};
 </script>
 
 <style scoped>

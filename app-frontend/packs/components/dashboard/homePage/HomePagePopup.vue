@@ -28,11 +28,11 @@
 
 <script>
 
-import Button from "../../baseComponents/Button";
-import {mapActions} from "vuex";
+import Button from '../../baseComponents/Button';
+import { mapActions } from 'vuex';
 
 export default {
-    name: "HomePagePopup",
+    name: 'HomePagePopup',
     components: {
         Button
     },
@@ -42,10 +42,10 @@ export default {
             this.$emit('onClosePopup');
         },
         ...mapActions({
-            deleteBanner: "deleteBanner",
+            deleteBanner: 'deleteBanner'
         })
-    },
-}
+    }
+};
 </script>
 
 <style scoped>

@@ -12,7 +12,7 @@
 <script>
 
 export default {
-    name: "Input",
+    name: 'Input',
     props: {
         modelValue: {
             type: [String, Number],
@@ -29,7 +29,7 @@ export default {
             this.$emit('update:modelValue', event.target.value);
         }
     }
-}
+};
 
 </script>
 

@@ -14,14 +14,14 @@
 
 <script>
 
-import HeaderPage from "./components/baseComponents/HeaderPage";
+import HeaderPage from './components/baseComponents/HeaderPage';
 
 export default {
-    name: "App",
+    name: 'App',
     components: {
         HeaderPage
     }
-}
+};
 
 </script>
 

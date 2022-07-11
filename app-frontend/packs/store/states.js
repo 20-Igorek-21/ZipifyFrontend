@@ -12,6 +12,6 @@ export const STATES = {
             idProduct: null,
             titleProduct: '',
             imgProduct: ''
-        }
+        };
     }
-}
+};

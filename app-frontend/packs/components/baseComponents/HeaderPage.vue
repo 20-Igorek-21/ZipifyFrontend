@@ -14,8 +14,8 @@
 <script>
 
 export default {
-    name: "HeaderPage"
-}
+    name: 'HeaderPage'
+};
 
 </script>
 

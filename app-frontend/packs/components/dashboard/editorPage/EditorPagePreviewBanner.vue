@@ -12,17 +12,17 @@
 
 <script>
 
-import {mapState} from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-    name: "EditorPagePreviewBanner",
+    name: 'EditorPagePreviewBanner',
     computed: {
         ...mapState({
             inputColor: state => state.inputColor,
             innerWysiwyg: state => state.inputWysiwyg
         })
-    },
-}
+    }
+};
 
 </script>
 

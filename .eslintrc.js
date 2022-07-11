@@ -2,10 +2,10 @@ module.exports = {
     env: {
         browser: true,
         es6: true,
-        node: true,
+        node: true
     },
     extends: [
-        'plugin:vue/vue3-recommended',
+        'plugin:vue/vue3-recommended'
     ],
     rules: {
         'no-console': 'off',
@@ -13,11 +13,11 @@ module.exports = {
         'no-unused-vars': ['warn', { vars: 'local', args: 'after-used' }],
         'no-extra-bind': 'error',
 
-// override default options for rules from base configurations
+        // override default options for rules from base configurations
         'no-cond-assign': ['error', 'always'],
         eqeqeq: ['warn', 'smart'],
 
-// disable rules from base configurations
+        // disable rules from base configurations
         'block-scoped-var': 'error',
         'guard-for-in': 'error',
         'no-loop-func': 'error',
@@ -89,4 +89,4 @@ module.exports = {
         'import/first': 'error',
         'import/no-namespace': 'error'
     }
-}
+};

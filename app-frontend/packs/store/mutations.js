@@ -34,4 +34,4 @@ export const MUTATIONS = {
             state.imgProduct = value;
         }
     }
-}
+};

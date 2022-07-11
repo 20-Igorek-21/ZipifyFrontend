@@ -1,17 +1,24 @@
-import Button from "../Button";
-import {shallowMount} from "@vue/test-utils";
+import { mount } from '@vue/test-utils';
+import Button from '../Button';
 
-
-function createComponentWrapper() {
-    return shallowMount( Button, {
+describe('component Button', () => {
+    const wrapper = mount(Button, {
         props: {
-            type: 'submit'
+            type: 'button'
         }
-    })
-}
+    });
 
-test('render HomePageView', () => {
-    const wrapper = createComponentWrapper()
-    expect(wrapper.find('.tt-button').exists()).toBe(true)
-    wrapper.find('.tt-button').trigger('click')
-})
+    it('the presence of a button', () => {
+        expect(wrapper.find('.tt-button').exists()).toBe(true);
+    });
+
+    it('trigger button', () => {
+        wrapper.find('.tt-button').trigger('click');
+    });
+
+    it('emit button', () => {
+        wrapper.vm.$emit('onClick');
+        expect(wrapper.emitted().onClick).toBeTruthy();
+        expect(wrapper.emitted().onClick.length).toBe(1);
+    });
+});
