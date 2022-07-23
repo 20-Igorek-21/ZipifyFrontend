@@ -16,7 +16,7 @@ export default {
     name: 'Button',
     methods: {
         onClick() {
-            this.$emit("onClick");
+            this.$emit('onClick');
         }
     },
     props: {
@@ -25,6 +25,6 @@ export default {
             required: true
         }
     }
-}
+};
 
 </script>

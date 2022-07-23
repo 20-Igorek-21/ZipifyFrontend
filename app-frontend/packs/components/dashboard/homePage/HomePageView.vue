@@ -1,48 +1,49 @@
 <template>
-
-    <div v-if="isLoader">
-
+    <div v-if="!isLoader">
         <HomePageEmptyState
-            @create="createBanner"
+            class="tt-home-page-empty-state"
             v-if="isEmpty"
+            @create="createBanner"
         />
 
         <HomePageWithBanners
-            @create="createBanner"
+            class="tt-home-page-with-banners"
             v-else
+            @create="createBanner"
         />
-
     </div>
 
-    <LoaderPage v-else/>
-
+    <LoaderPage
+        v-else
+        class="tt-loader"
+    />
 </template>
 
 <script>
 
-import HomePageEmptyState from "./HomePageEmptyState";
-import HomePageWithBanners from "./HomePageWithBanners";
-import router from "../../../router/router";
-import LoaderPage from "../../baseComponents/LoaderPage";
-import {mapActions, mapState} from 'vuex';
+import HomePageEmptyState from './HomePageEmptyState';
+import HomePageWithBanners from './HomePageWithBanners';
+import router from '../../../router/router';
+import LoaderPage from '../../baseComponents/LoaderPage';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'HomePageView',
     components: {
         LoaderPage,
         HomePageWithBanners,
-        HomePageEmptyState,
+        HomePageEmptyState
     },
     methods: {
         createBanner() {
             router.push('/editor');
         },
         ...mapActions({
-            fetchBanners: 'fetchBanners',
+            fetchBanners: 'fetchBanners'
         })
     },
     computed: {
-        ...mapState ({
+        ...mapState({
             isLoader: state => state.isLoader,
             isEmpty: state => state.isEmpty
         })
@@ -50,6 +51,6 @@ export default {
     mounted() {
         this.fetchBanners();
     }
-}
+};
 
 </script>

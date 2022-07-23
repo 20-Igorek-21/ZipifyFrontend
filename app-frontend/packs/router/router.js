@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import homePageView from '../components/dashboard/homePage/HomePageView';
 import editorPageView from '../components/dashboard/editorPage/EditorPageView';
 
@@ -8,11 +8,11 @@ export default createRouter({
     routes: [
         {
             path: '/',
-            component: homePageView,
+            component: homePageView
         },
         {
             path: '/editor',
-            component: editorPageView,
-        },
-    ],
+            component: editorPageView
+        }
+    ]
 });

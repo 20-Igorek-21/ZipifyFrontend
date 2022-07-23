@@ -30,14 +30,14 @@
 
 <script>
 
-import Button from "../../baseComponents/Button";
-import HomePageBanner from "./HomePageBanner";
-import HomePagePopup from "./HomePagePopup";
-import Confirm from "../../baseComponents/Confirm";
-import {mapState} from "vuex";
+import Button from '../../baseComponents/Button';
+import HomePageBanner from './HomePageBanner';
+import HomePagePopup from './HomePagePopup';
+import Confirm from '../../baseComponents/Confirm';
+import { mapState } from 'vuex';
 
 export default {
-    name: "HomePageWithBanners",
+    name: 'HomePageWithBanners',
     components: {
         Confirm,
         HomePagePopup,
@@ -46,8 +46,8 @@ export default {
     },
     data() {
         return {
-            isShowPopup: false,
-        }
+            isShowPopup: false
+        };
     },
     methods: {
         onDeleteBanner() {
@@ -61,8 +61,8 @@ export default {
         ...mapState({
             dataBanners: state => state.dataBanners
         })
-    },
-}
+    }
+};
 
 </script>
 

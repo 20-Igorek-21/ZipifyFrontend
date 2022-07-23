@@ -19,8 +19,8 @@
 <script>
 
 export default {
-    name: "Confirm"
-}
+    name: 'Confirm'
+};
 
 </script>
 
