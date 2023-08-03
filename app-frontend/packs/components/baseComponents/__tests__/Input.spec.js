@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import Input from '../Input';
 
-describe('component Input', () => {
+describe('component Input.tsx', () => {
     const wrapper = mount(Input, {
         props: {
             modelValue: '',

@@ -1,5 +1,5 @@
 {
-  "name": "ZipifyFrontendOnboarding",
+  "name": "ZipifyFrontend",
   "private": true,
   "scripts": {
     "test:unit": "vue-cli-service test:unit",
